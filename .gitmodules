@@ -1,0 +1,3 @@
+[submodule "OpenHSP"]
+	path = OpenHSP
+	url = git@github.com:onitama/OpenHSP.git
