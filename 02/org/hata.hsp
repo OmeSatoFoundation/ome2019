@@ -1,0 +1,10 @@
+#include "rpz-gpio.as"
+
+*hata
+	gpmes "えっさ"
+	update 5
+
+	gpmes "　　　ほいさ"
+	update 5
+
+	goto *hata

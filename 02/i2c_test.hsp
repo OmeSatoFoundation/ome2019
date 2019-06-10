@@ -1,0 +1,24 @@
+
+;	RPZ-Sensor test
+
+#include "rpz-gpio.as"
+
+*main1
+	gpmes "Getting result..."
+	update 10
+
+	geti2c
+	res = "温度 : "+rpz_temp+"C\n"
+	res+= "気圧 : "+rpz_pressure+"hPa\n"
+	res+= "湿度 : "+rpz_humidity+"%\n"
+	res+= "照度 : "+rpz_lux+"\n"
+	gpmes res
+
+*main2
+	update 1
+	stick key
+	if key&48 : goto *main1
+	goto *main2
+
+
+
