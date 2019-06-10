@@ -1,0 +1,50 @@
+#include "hsp3dish.as"
+
+	;	複数の物体を動かす(2)
+	;
+	celload "minitama.png",1	; 画像ファイル
+
+	facemax=30			; 物体の最大数
+
+	;	物体の初期化
+	;
+	dim facex,facemax
+	dim facey,facemax
+	dim facepx,facemax
+	repeat facemax
+	facex(cnt)=rnd(640)			; X位置を決める
+	facey(cnt)=rnd(480)			; Y位置を決める
+	facepx(cnt)=rnd(5)-2			; X位置の増分を決める
+	loop
+
+*main
+	redraw 0				; 描画始め
+
+	color 0,64,0
+	boxf					; 背景を消す
+
+	;	物体を動かす
+	;
+	repeat facemax
+	facex(cnt)+=facepx(cnt)			; 横方向に動かす
+	facey(cnt)+=4				; 下に動かす
+	if facey(cnt)>480 {			; 下まで行ったら上に戻す
+		facey(cnt)=-64
+		facex(cnt)=rnd(640)		; X位置を決める
+		facepx(cnt)=rnd(5)-2		; X位置の増分を決める
+	}
+	loop
+
+	;	物体を描画
+	;
+	gmode 2					; 画像モード
+	repeat facemax
+		pos facex(cnt),facey(cnt)
+		celput 1			; 画像の描画
+	loop
+
+	redraw 1				; 描画終わり
+	await 20
+
+	goto *main
+
