@@ -36,6 +36,9 @@
 	color 0,0,0:boxf	; 画面クリア
 	gmode 0,640,480
 	pos 0,0:gcopy 1		; タイトル表示
+	x=mousex:y=mousey
+	color 255,255,255
+	pos x-10,y-10:mes "+"
 	redraw 1
 	await 1000/30
 	goto *main1
@@ -116,6 +119,9 @@
 	}
 
 	qdraw			; オブジェクトの描画
+
+	x=mousex:y=mousey
+	pos x-10,y-10:mes "+"
 
 	;	表示関係
 	if score>high : high=score

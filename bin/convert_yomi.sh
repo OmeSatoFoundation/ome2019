@@ -1,1 +1,0 @@
-../04/resources/julius/convert_yomi.sh

@@ -1,4 +1,5 @@
 ; Star Liner
+#include "hsp3dish.as"
 
 	m=50
 	dim x,m :dim y,m :dim dx,m :dim dy,m

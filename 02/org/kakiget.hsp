@@ -1,4 +1,5 @@
 ;Kaki Get!
+#include "hsp3dish.as"
 
 	dim kx,32 :dim ky,32
 	repeat 16 :ky(cnt)=488 :loop

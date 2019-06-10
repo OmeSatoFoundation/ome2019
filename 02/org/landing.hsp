@@ -1,4 +1,5 @@
 ;Landing Game
+#include "hsp3dish.as"
 
 	dim map,768
 	hi=0

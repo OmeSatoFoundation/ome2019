@@ -1,18 +1,11 @@
-#include "rpz-gpio.as"
+#include "hsp3dish.as"
 
-	gpmes "LEDを制御しています。"
-
+	redraw 0
+	mes "OK!"
+	redraw 1
 *hata
 	gpio 17,1
-	gpio 18,1
-	gpio 22,1
-	gpio 27,1
-	update 5
-
+	wait 50
 	gpio 17,0
-	gpio 18,0
-	gpio 22,0
-	gpio 27,0
-	update 5
-
+	wait 50
 	goto *hata

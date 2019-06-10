@@ -1,10 +1,15 @@
-#include "rpz-gpio.as"
+#include "hsp3dish.as"
 
+	font "",80
 *hata
-	gpmes "えっさ"
-	update 5
-
-	gpmes "　　　ほいさ"
-	update 5
-
+	redraw 0
+	pos 0,0
+	mes "えっさ"
+	redraw 1
+	wait 50
+	redraw 0
+	pos 0,0
+	mes "　　　ほいさ"
+	redraw 1
+	wait 50
 	goto *hata
