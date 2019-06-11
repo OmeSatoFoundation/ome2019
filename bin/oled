@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+import FaBoOLED_EROLED096
+import time
+import sys
+
+args = sys.argv
+#print(args[1].split(","))
+word = list(args[1])#.split(",")
+#print(word)
+#print(word[0])
+#NUM = len(word)
+#print(NUM)
+
+oled = FaBoOLED_EROLED096.EROLED096()
+oled.clear()
+
+i, j = 0,0
+try:	
+	for w in range(len(word)):
+                #print(i,j)
+                oled.setCursor(j,i)
+		oled.write(word[w])
+                if j > 13:
+                    j = 0
+                    i += 1
+                else :
+                    j += 1
+	time.sleep(1)
+except KeyboardInterrupt:
+	oled.clear()
+	sys.exit()
+
