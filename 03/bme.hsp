@@ -1,0 +1,24 @@
+#include "rpz-gpio.as"
+
+*main1
+	redraw 0
+	font "",30
+	pos 20,20
+	mes "Getting result..."
+	redraw 1
+	wait 100
+
+	geti2c
+	res = "温度 : "+rpz_temp+"C\n"
+	res+= "気圧 : "+rpz_pressure+"hPa\n"
+	res+= "湿度 : "+rpz_humidity+"%\n"
+	
+	redraw 0
+	font "",30
+	pos 20,20
+	mes res
+	redraw 1
+	wait 100
+
+	goto *main1
+
