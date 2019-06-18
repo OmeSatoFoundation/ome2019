@@ -1,5 +1,3 @@
-#include "hsp3cl.as"
-
 #module
     #deffunc init_julius
       sdim buf, 4096
