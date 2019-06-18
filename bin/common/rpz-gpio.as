@@ -83,9 +83,9 @@
 	;	rpz-sensorボードの照度センサーを初期化します
 	;	(最初の1回だけ実行してください、以降はgeti2c_luxで更新できます)
 	;
-	devcontrol "i2copen",0x29	; TSL2561を初期化
+	devcontrol "i2copen",0x39	; TSL2572を初期化
 	if stat : return 1
-	devcontrol "i2cwrite",0x0080,2	; 電源OFF
+	devcontrol "i2cwrite",0x0180,2	; 電源OFF
 	if stat : return 1
 	wait 40
 	devcontrol "i2cwrite",0x0380,2	; 電源ON
@@ -98,7 +98,7 @@
 	;	geti2c_lux
 	;	(照度) rpz_luxを高速に取得
 	;
-	devcontrol "i2cwrite",0xc+0x80,1
+	devcontrol "i2cwrite",0x14+0x80,1
 	devcontrol "i2creadw"
 	rpz_lux@=0+stat			; 16bit整数でセンサー値を取得
 	return

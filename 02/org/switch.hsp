@@ -1,21 +1,15 @@
-#include "rpz-gpio.as"
+#include "hsp3dish.as"
 
 *main
 	sw1=gpioin(5)
-	sw2=gpioin(6)
 
 	font "",20
 
 	redraw 0
 
-	color sw2*255,255,0
-	boxf
-
-	gpio 17,sw1:gpio 18,sw1:gpio 22,sw1:gpio 27,sw1
-
 	color 0,0,0
 	pos 20,20
-	mes "センサーボードのスイッチを押してください"
+	mes "センサーボードのスイッチ="+sw1
 
 	redraw 1
 	await 66
