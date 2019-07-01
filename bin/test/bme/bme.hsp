@@ -1,0 +1,22 @@
+#include "hsp3cl.as"
+#include "rpz-gpio.as"
+
+i2cch = 0
+datalen = 8
+
+res = init_bme(i2cch)
+if res {
+  mes "failed to init: " + res
+  end
+}
+
+dim data, 8
+
+res = get_temp(i2cch)
+mes "" + res + " degrees"
+
+res = get_humidity(i2cch)
+mes "" + res + " %"
+
+res = get_pressure(i2cch)
+mes "" + res + " Pa"
