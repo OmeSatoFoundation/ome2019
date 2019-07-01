@@ -284,7 +284,7 @@
   var1 = (((adc_T>>3) - (static_cal_dig_T1<<1)) * (static_cal_dig_T2)) >> 11
   var2  = (((((adc_T>>4) - (static_cal_dig_T1)) * ((adc_T>>4) - (static_cal_dig_T1))) >> 12) * (static_cal_dig_T3)) >> 14
   static_t_fine = var1 + var2
-  temp = ((static_t_fine * 5 + 128) >> 8)/100.0
+  temp = double((static_t_fine * 5 + 128) >> 8)/100.0
   return temp
 
 #defcfunc get_humidity int i2cch
