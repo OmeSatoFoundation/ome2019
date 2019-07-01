@@ -1,7 +1,5 @@
-#include "hsp3cl.as"
+#include "hsp3dish.as"
 #include "rpz-gpio.as"
-
-; 実行前にrpz-gpio.asの `#include "hsp3dish.as"` を取り除く
 
 i2cch = 0
 datalen = 8
@@ -12,7 +10,9 @@ if res {
   end
 }
 
-dim data, 8
+*main
+redraw 0
+pos 60, 60
 
 res = get_temp(i2cch)
 mes "" + res + " degrees"
@@ -22,3 +22,7 @@ mes "" + res + " %"
 
 res = get_pressure(i2cch)
 mes "" + res + " Pa"
+
+redraw 1
+wait 100
+goto *main
