@@ -307,7 +307,7 @@
   ; TODO: error handling using `status`
   adc_P = data(2)
 
-  var1 = ((t_fine) >> 1) - 64000
+  var1 = ((static_t_fine) >> 1) - 64000
   var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * static_cal_dig_P6
   var2 = var2 + ((var1 * static_cal_dig_P5) << 1)
   var2 = (var2 >> 2) + (static_cal_dig_P4 << 16)
