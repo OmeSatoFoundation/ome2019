@@ -2,6 +2,8 @@
 #ifndef __rpz-gpio__
 #define __rpz-gpio__
 
+#include "hsp3dish.as"
+
 	;	RPZ-Sensor用の拡張コマンドを定義するファイルです
 	;	#include "rpz-gpio.as"
 	;	を先頭に入れて使用してください
