@@ -78,256 +78,256 @@
 	return 0
 
 #defcfunc init_bme int i2cch
-  static_cal_dig_T1 = 0
-  static_cal_dig_T2 = 0
-  static_cal_dig_T3 = 0
-  static_cal_dig_P1 = 0
-  static_cal_dig_P2 = 0
-  static_cal_dig_P3 = 0
-  static_cal_dig_P4 = 0
-  static_cal_dig_P5 = 0
-  static_cal_dig_P6 = 0
-  static_cal_dig_P7 = 0
-  static_cal_dig_P8 = 0
-  static_cal_dig_P9 = 0
-  static_cal_dig_H1 = 0
-  static_cal_dig_H2 = 0
-  static_cal_dig_H3 = 0
-  static_cal_dig_H4 = 0
-  static_cal_dig_H5 = 0
-  static_cal_dig_H6 = 0
-  devcontrol "i2copen", 0x77, i2cch
-  if stat : return 1
+	static_cal_dig_T1 = 0
+	static_cal_dig_T2 = 0
+	static_cal_dig_T3 = 0
+	static_cal_dig_P1 = 0
+	static_cal_dig_P2 = 0
+	static_cal_dig_P3 = 0
+	static_cal_dig_P4 = 0
+	static_cal_dig_P5 = 0
+	static_cal_dig_P6 = 0
+	static_cal_dig_P7 = 0
+	static_cal_dig_P8 = 0
+	static_cal_dig_P9 = 0
+	static_cal_dig_H1 = 0
+	static_cal_dig_H2 = 0
+	static_cal_dig_H3 = 0
+	static_cal_dig_H4 = 0
+	static_cal_dig_H5 = 0
+	static_cal_dig_H6 = 0
+	devcontrol "i2copen", 0x77, i2cch
+	if stat : return 1
 
-  ; *** get calibration data ***
-  ; dig_T1
-  devcontrol "i2cwrite", 0x88, 1, i2cch
-  if stat: return 2
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_T1 = stat
+	; *** get calibration data ***
+	; dig_T1
+	devcontrol "i2cwrite", 0x88, 1, i2cch
+	if stat: return 2
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_T1 = stat
 
-  ; dig_T2
-  devcontrol "i2cwrite", 0x8A, 1, i2cch
-  if stat: return 3
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_T2 = get_signed16(stat)
+	; dig_T2
+	devcontrol "i2cwrite", 0x8A, 1, i2cch
+	if stat: return 3
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_T2 = get_signed16(stat)
 
-  ; dig_T3
-  devcontrol "i2cwrite", 0x8C, 1, i2cch
-  if stat: return 4
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_T3 = get_signed16(stat)
+	; dig_T3
+	devcontrol "i2cwrite", 0x8C, 1, i2cch
+	if stat: return 4
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_T3 = get_signed16(stat)
 
-  ; dig_P1
-  devcontrol "i2cwrite", 0x8E, 1, i2cch
-  if stat: return 5
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P1 = stat
+	; dig_P1
+	devcontrol "i2cwrite", 0x8E, 1, i2cch
+	if stat: return 5
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P1 = stat
 
-  ; dig_P2
-  devcontrol "i2cwrite", 0x90, 1, i2cch
-  if stat: return 6
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P2 = get_signed16(stat)
+	; dig_P2
+	devcontrol "i2cwrite", 0x90, 1, i2cch
+	if stat: return 6
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P2 = get_signed16(stat)
 
-  ; dig_P3
-  devcontrol "i2cwrite", 0x92, 1, i2cch
-  if stat: return 7
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P3 = get_signed16(stat)
+	; dig_P3
+	devcontrol "i2cwrite", 0x92, 1, i2cch
+	if stat: return 7
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P3 = get_signed16(stat)
 
-  ; dig_P4
-  devcontrol "i2cwrite", 0x94, 1, i2cch
-  if stat: return 8
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P4 = get_signed16(stat)
+	; dig_P4
+	devcontrol "i2cwrite", 0x94, 1, i2cch
+	if stat: return 8
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P4 = get_signed16(stat)
 
-  ; dig_P5
-  devcontrol "i2cwrite", 0x96, 1, i2cch
-  if stat: return 9
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P5 = get_signed16(stat)
+	; dig_P5
+	devcontrol "i2cwrite", 0x96, 1, i2cch
+	if stat: return 9
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P5 = get_signed16(stat)
 
-  ; dig_P6
-  devcontrol "i2cwrite", 0x98, 1, i2cch
-  if stat: return 10
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P6 = get_signed16(stat)
+	; dig_P6
+	devcontrol "i2cwrite", 0x98, 1, i2cch
+	if stat: return 10
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P6 = get_signed16(stat)
 
-  ; dig_P7
-  devcontrol "i2cwrite", 0x9A, 1, i2cch
-  if stat: return 11
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P7 = get_signed16(stat)
+	; dig_P7
+	devcontrol "i2cwrite", 0x9A, 1, i2cch
+	if stat: return 11
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P7 = get_signed16(stat)
 
-  ; dig_P8
-  devcontrol "i2cwrite", 0x9C, 1, i2cch
-  if stat: return 12
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P8 = get_signed16(stat)
+	; dig_P8
+	devcontrol "i2cwrite", 0x9C, 1, i2cch
+	if stat: return 12
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P8 = get_signed16(stat)
 
-  ; dig_P9
-  devcontrol "i2cwrite", 0x9E, 1, i2cch
-  if stat: return 13
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_P9 = get_signed16(stat)
+	; dig_P9
+	devcontrol "i2cwrite", 0x9E, 1, i2cch
+	if stat: return 13
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_P9 = get_signed16(stat)
 
-  ; dig_H1
-  devcontrol "i2cwrite", 0xA1, 1, i2cch
-  if stat: return 14
-  devcontrol "i2cread", i2cch
-  static_cal_dig_H1 = stat
+	; dig_H1
+	devcontrol "i2cwrite", 0xA1, 1, i2cch
+	if stat: return 14
+	devcontrol "i2cread", i2cch
+	static_cal_dig_H1 = stat
 
-  ; dig_H2
-  devcontrol "i2cwrite", 0xE1, 1, i2cch
-  if stat: return 15
-  devcontrol "i2creadw", i2cch
-  static_cal_dig_H2 = get_signed16(stat)
+	; dig_H2
+	devcontrol "i2cwrite", 0xE1, 1, i2cch
+	if stat: return 15
+	devcontrol "i2creadw", i2cch
+	static_cal_dig_H2 = get_signed16(stat)
 
-  ; dig_H3
-  devcontrol "i2cwrite", 0xE3, 1, i2cch
-  if stat: return 16
-  devcontrol "i2cread", i2cch
-  static_cal_dig_H3 = stat
+	; dig_H3
+	devcontrol "i2cwrite", 0xE3, 1, i2cch
+	if stat: return 16
+	devcontrol "i2cread", i2cch
+	static_cal_dig_H3 = stat
 
-  devcontrol "i2cwrite", 0xE5, 1, i2cch
-  if stat: return 17
-  devcontrol "i2cread", i2cch
-  h4h5lower = stat
+	devcontrol "i2cwrite", 0xE5, 1, i2cch
+	if stat: return 17
+	devcontrol "i2cread", i2cch
+	h4h5lower = stat
 
-  h4lower = (0x0F & h4h5lower)
-  h5lower = (0xF0 & h4h5lower) >> 4
+	h4lower = (0x0F & h4h5lower)
+	h5lower = (0xF0 & h4h5lower) >> 4
 
-  ; dig_H4
-  devcontrol "i2cwrite", 0xE4, 1, i2cch
-  if stat : return 18
-  devcontrol "i2cread", i2cch
-  static_cal_dig_H4 = get_signed12((stat << 4) | h4lower)
+	; dig_H4
+	devcontrol "i2cwrite", 0xE4, 1, i2cch
+	if stat : return 18
+	devcontrol "i2cread", i2cch
+	static_cal_dig_H4 = get_signed12((stat << 4) | h4lower)
 
-  ; dig_H5
-  devcontrol "i2cwrite", 0xE6, 1, i2cch
-  if stat : return 19
-  devcontrol "i2cread", i2cch
-  static_cal_dig_H5 = get_signed12((stat << 4) | h5lower)
+	; dig_H5
+	devcontrol "i2cwrite", 0xE6, 1, i2cch
+	if stat : return 19
+	devcontrol "i2cread", i2cch
+	static_cal_dig_H5 = get_signed12((stat << 4) | h5lower)
 
-  ; dig_H6
-  devcontrol "i2cwrite", 0xE7, 1, i2cch
-  if stat : return 20
-  devcontrol "i2cread", i2cch
-  static_cal_dig_H6 = get_signed8(stat)
+	; dig_H6
+	devcontrol "i2cwrite", 0xE7, 1, i2cch
+	if stat : return 20
+	devcontrol "i2cread", i2cch
+	static_cal_dig_H6 = get_signed8(stat)
 
 	return 0
 
 #defcfunc get_signed16 int uint
-  res = uint
-  if uint>32767: res = uint-65536
-  return res
+	res = uint
+	if uint>32767: res = uint-65536
+	return res
 
 #defcfunc get_signed8 int uint
-  res = uint
-  if uint>127: res = uint-256
-  return res
+	res = uint
+	if uint>127: res = uint-256
+	return res
 
 #defcfunc get_signed12 int uint
-  res = uint
-  if uint>2047: res = uint-4096
-  return res
+	res = uint
+	if uint>2047: res = uint-4096
+	return res
 
 #defcfunc force_bme int i2cch, array THP
-  devcontrol "i2cwrite", 0x00F5, 2, i2cch
-  if stat: return 1
-  devcontrol "i2cwrite", 0x05F2, 2, i2cch
-  if stat: return 2
-  devcontrol "i2cwrite", 0xB5F4, 2, i2cch
-  if stat: return 3
+	devcontrol "i2cwrite", 0x00F5, 2, i2cch
+	if stat: return 1
+	devcontrol "i2cwrite", 0x05F2, 2, i2cch
+	if stat: return 2
+	devcontrol "i2cwrite", 0xB5F4, 2, i2cch
+	if stat: return 3
 
-  ; read status
-  ; wait for measuring is 0
-  devcontrol "i2cwrite", 0xF3, 1, i2cch
-  if stat : return 4
-  devcontrol "i2cread", i2cch
-  status = stat
-  while (status & 0x08 != 0)
-    devcontrol "i2cwrite", 0xF3, 1, i2cch
-    if stat : return 5
-    devcontrol "i2cread", i2cch
-    status = stat
-  wend
+	; read status
+	; wait for measuring is 0
+	devcontrol "i2cwrite", 0xF3, 1, i2cch
+	if stat : return 4
+	devcontrol "i2cread", i2cch
+	status = stat
+	while (status & 0x08 != 0)
+		devcontrol "i2cwrite", 0xF3, 1, i2cch
+		if stat : return 5
+		devcontrol "i2cread", i2cch
+		status = stat
+	wend
 
-  readdatalen = 8
-  readdataaddr = 0xF7
-  dim data, readdatalen
+	readdatalen = 8
+	readdataaddr = 0xF7
+	dim data, readdatalen
 
-  repeat readdatalen
-    devcontrol "i2cwrite", readdataaddr, 1, i2cch
-    if stat : return 6
-    devcontrol "i2cread", i2cch
-    data(cnt) = stat
-    readdataaddr++
-  loop
+	repeat readdatalen
+		devcontrol "i2cwrite", readdataaddr, 1, i2cch
+		if stat : return 6
+		devcontrol "i2cread", i2cch
+		data(cnt) = stat
+		readdataaddr++
+	loop
 
-  adc_T = (data(3) << 12) + (data(4) << 4) + (data(5) >> 4)
-  adc_H = (data(6)<<8) + data(7)
-  adc_P = (data(0)<<12) + (data(1)<<4) + (data(2)>>4)
+	adc_T = (data(3) << 12) + (data(4) << 4) + (data(5) >> 4)
+	adc_H = (data(6)<<8) + data(7)
+	adc_P = (data(0)<<12) + (data(1)<<4) + (data(2)>>4)
 
-  THP(0) = adc_T
-  THP(1) = adc_H
-  THP(2) = adc_P
-  return 0
+	THP(0) = adc_T
+	THP(1) = adc_H
+	THP(2) = adc_P
+	return 0
 
 #defcfunc get_temp int i2cch
-  static_t_fine = 0
+	static_t_fine = 0
 
-  dim data, 3
-  status = force_bme(i2cch, data)
-  ; TODO: error handling using `status`
-  adc_T = data(0)
+	dim data, 3
+	status = force_bme(i2cch, data)
+	; TODO: error handling using `status`
+	adc_T = data(0)
 
-  var1 = (((adc_T>>3) - (static_cal_dig_T1<<1)) * (static_cal_dig_T2)) >> 11
-  var2  = (((((adc_T>>4) - (static_cal_dig_T1)) * ((adc_T>>4) - (static_cal_dig_T1))) >> 12) * (static_cal_dig_T3)) >> 14
-  static_t_fine = var1 + var2
-  temp = double((static_t_fine * 5 + 128) >> 8)/100.0
-  return temp
+	var1 = (((adc_T>>3) - (static_cal_dig_T1<<1)) * (static_cal_dig_T2)) >> 11
+	var2  = (((((adc_T>>4) - (static_cal_dig_T1)) * ((adc_T>>4) - (static_cal_dig_T1))) >> 12) * (static_cal_dig_T3)) >> 14
+	static_t_fine = var1 + var2
+	temp = double((static_t_fine * 5 + 128) >> 8)/100.0
+	return temp
 
 #defcfunc get_humidity int i2cch
-  dim data, 3
-  status = force_bme(i2cch, data)
-  ; TODO: error handling using `status`
-  adc_H = data(1)
-  v_x1_u32r = (staic_t_fine - 76800)
-  v_x1_u32r = (((((adc_H << 14) - ((static_cal_dig_H4) << 20) - ((static_cal_dig_H5) * v_x1_u32r)) + 16384) >> 15) * (((((((v_x1_u32r * static_cal_dig_H6) >> 10) * (((v_x1_u32r * static_cal_dig_H3) >> 11) + 32768)) >> 10) + 2097152) * static_cal_dig_H2 + 8192) >> 14))
-  v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * static_cal_dig_H1) >> 4))
-  if v_x1_u32r < 0: v_x1_u32r = 0
-  if v_x1_u32r > 419430400: v_x1_u32r = 419430400
-  res = double(v_x1_u32r>>12)/1024.0
+	dim data, 3
+	status = force_bme(i2cch, data)
+	; TODO: error handling using `status`
+	adc_H = data(1)
+	v_x1_u32r = (staic_t_fine - 76800)
+	v_x1_u32r = (((((adc_H << 14) - ((static_cal_dig_H4) << 20) - ((static_cal_dig_H5) * v_x1_u32r)) + 16384) >> 15) * (((((((v_x1_u32r * static_cal_dig_H6) >> 10) * (((v_x1_u32r * static_cal_dig_H3) >> 11) + 32768)) >> 10) + 2097152) * static_cal_dig_H2 + 8192) >> 14))
+	v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * static_cal_dig_H1) >> 4))
+	if v_x1_u32r < 0: v_x1_u32r = 0
+	if v_x1_u32r > 419430400: v_x1_u32r = 419430400
+	res = double(v_x1_u32r>>12)/1024.0
 	return res
 
 #defcfunc get_pressure int i2cch
-  ; need 64bit integer
-  dim data, 3
-  status = force_bme(i2cch, data)
-  ; TODO: error handling using `status`
-  adc_P = data(2)
+	; need 64bit integer
+	dim data, 3
+	status = force_bme(i2cch, data)
+	; TODO: error handling using `status`
+	adc_P = data(2)
 
-  var1 = ((static_t_fine) >> 1) - 64000
-  var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * static_cal_dig_P6
-  var2 = var2 + ((var1 * static_cal_dig_P5) << 1)
-  var2 = (var2 >> 2) + (static_cal_dig_P4 << 16)
-  var1 = (((static_cal_dig_P3 * (((var1>>2) * (var1>>2)) >> 13 )) >> 3) + (((static_cal_dig_P2) * var1)>>1))>>18
-  var1 = ((((32768+var1))*(static_cal_dig_P1))>>15)
+	var1 = ((static_t_fine) >> 1) - 64000
+	var2 = (((var1 >> 2) * (var1 >> 2)) >> 11) * static_cal_dig_P6
+	var2 = var2 + ((var1 * static_cal_dig_P5) << 1)
+	var2 = (var2 >> 2) + (static_cal_dig_P4 << 16)
+	var1 = (((static_cal_dig_P3 * (((var1>>2) * (var1>>2)) >> 13 )) >> 3) + (((static_cal_dig_P2) * var1)>>1))>>18
+	var1 = ((((32768+var1))*(static_cal_dig_P1))>>15)
 
-  if var1 == 0 : return 0  ; avoid zero-division exception
+	if var1 == 0 : return 0  ; avoid zero-division exception
 
-  p = ((((1048576)-adc_P)-(var2>>12)))*3125
-  if p < 0x80000000 {
-    p = (p << 1) / var1
-  }else{
-    p = (p / var1) * 2
-  }
-  var1 = ((static_cal_dig_P9) * ((((p>>3) * (p>>3))>>13)))>>12
-  var2 = (((p>>2)) * (static_cal_dig_P8))>>13
-  res = (p + ((var1 + var2 + static_cal_dig_P7) >> 4))
-  return double(res) / 100.0
+	p = ((((1048576)-adc_P)-(var2>>12)))*3125
+	if p < 0x80000000 {
+		p = (p << 1) / var1
+	}else{
+		p = (p / var1) * 2
+	}
+	var1 = ((static_cal_dig_P9) * ((((p>>3) * (p>>3))>>13)))>>12
+	var2 = (((p>>2)) * (static_cal_dig_P8))>>13
+	res = (p + ((var1 + var2 + static_cal_dig_P7) >> 4))
+	return double(res) / 100.0
 
 #deffunc geti2c_lux_init
 
@@ -387,7 +387,7 @@
 	return
 	
 
-#deffunc integration int _again, int _atime, int _ch, array data
+#deffunc integration int _again, int _atime, int _ch, array _data
 	devcontrol "i2cwrite",0x0180,2, _ch
 	if stat : return 1
 	set _again, _atime, _ch
@@ -406,10 +406,10 @@
 	loop
 	devcontrol "i2cwrite",0x14|0xA0,1, _ch
 	devcontrol "i2creadw", _ch	
-	data(0) = stat
+	_data(0) = stat
 	devcontrol "i2cwrite",0x16|0x80,1, _ch
 	devcontrol "i2creadw", _ch
-	data(1) = stat
+	_data(1) = stat
 
 	return 
 
