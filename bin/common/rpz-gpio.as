@@ -295,7 +295,7 @@
   ; TODO: error handling using `status`
   adc_H = data(1)
   v_x1_u32r = (staic_t_fine - 76800)
-  v_x1_u32r = (((((adc_H << 14) - ((static_cal_dig_H4) << 20) - ((static_cal_dig_H5) * v_x1_u32r)) + 16384) >> 15) * (((((((v_x1_u32r * tatic_cal_dig_H6) >> 10) * (((v_x1_u32r * static_cal_dig_H3) >> 11) + 32768)) >> 10) + 2097152) * static_cal_dig_H2 + 8192) >> 14))
+  v_x1_u32r = (((((adc_H << 14) - ((static_cal_dig_H4) << 20) - ((static_cal_dig_H5) * v_x1_u32r)) + 16384) >> 15) * (((((((v_x1_u32r * static_cal_dig_H6) >> 10) * (((v_x1_u32r * static_cal_dig_H3) >> 11) + 32768)) >> 10) + 2097152) * static_cal_dig_H2 + 8192) >> 14))
   v_x1_u32r = (v_x1_u32r - (((((v_x1_u32r >> 15) * (v_x1_u32r >> 15)) >> 7) * static_cal_dig_H1) >> 4))
   if v_x1_u32r < 0: v_x1_u32r = 0
   if v_x1_u32r > 419430400: v_x1_u32r = 419430400
