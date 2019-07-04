@@ -13,7 +13,7 @@
 
 *hata
 	ima_btn = gpioin(5)
-	if ima_btn=0 && mae_btn=1 {
+	if ima_btn=0 {
 		ledidx = (ledidx+1) \ 4
 
 		if ledidx=1 {
