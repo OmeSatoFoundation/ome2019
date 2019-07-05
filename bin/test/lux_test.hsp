@@ -1,0 +1,21 @@
+#include "hsp3dish.as"
+#include "rpz-gpio.as"
+
+CH = 0
+init_lux CH
+
+*main
+
+
+	redraw 0
+	pos 60,60 
+	font "",20
+	lux = cget_lux(CH)
+	mes "明るさは"+lux+"です"
+
+	redraw 1
+
+	wait 100
+	goto *main	
+
+i2cclose CH

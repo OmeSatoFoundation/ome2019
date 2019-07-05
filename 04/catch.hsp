@@ -1,5 +1,6 @@
 #include "rpz-gpio.as"
 
+	randomize
 	redraw 0
 	mes "Reset..."
 	redraw 1
@@ -17,7 +18,7 @@
 	y=-80
 *main
 	geti2c_lux
-	tx=rpz_lux/32
+	tx=rpz_lux/2
 	ty=260
 
 	if ((x+64>=tx)&&(tx+128>x)&&(y>=ty)) : catch=1
