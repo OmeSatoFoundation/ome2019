@@ -96,7 +96,7 @@
 	static_cal_dig_H4 = 0
 	static_cal_dig_H5 = 0
 	static_cal_dig_H6 = 0
-	devcontrol "i2copen", 0x77, i2cch
+	devcontrol "i2copen", 0x76, i2cch
 	if stat : return 1
 
 	; *** get calibration data ***
