@@ -13,12 +13,6 @@ if success {				; 初期化成功チェック
 }
 
 init_lux i2c_ch_tsl			; 照度センサ tsl2572を初期化する
-if success {				; 初期化成功チェック
-  redraw 0
-  mes "failed to init tsl: " + success
-  redraw 1
-  stop
-}
 
 *main
 	redraw 0
