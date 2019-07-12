@@ -7,7 +7,7 @@ i2c_ch_tsl = 1
 fail = init_bme(i2c_ch_bme)		; 温湿度気圧センサ bm280 を初期化する
 if fail {				; 初期化成功チェック
   redraw  0
-  mes "failed to init bme: " + success
+  mes "failed to init bme: " + fail
   redraw 1
   stop
 }
