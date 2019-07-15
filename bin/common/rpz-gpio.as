@@ -77,117 +77,31 @@
 	rpz_lux@=0.0+res
 	return 0
 
-#deffunc init_lux int _ch
-	devcontrol "i2copen",0x39,_ch	; TSL2572を初期化
+#deffunc geti2c_lux_init
+
+	;	geti2c_lux_init
+	;	rpz-sensorボードの照度センサーを初期化します
+	;	(最初の1回だけ実行してください、以降はgeti2c_luxで更新できます)
+	;
+	devcontrol "i2copen",0x39	; TSL2572を初期化
+	if stat : return 1
+	devcontrol "i2cwrite",0x0180,2	; 電源OFF
+	if stat : return 1
+	wait 40
+	devcontrol "i2cwrite",0x0380,2	; 電源ON
 	if stat : return 1
 	wait 40
 	return 0
-	
-#defcfunc max var _p1, var _p2
-	if _p1 > _p2 : return _p1 : else : return _p2
 
-#deffunc set var _p1, var _p2, int _ch
-	if(_p1 == 0){
-		devcontrol "i2cwrite",0x048D, 2, _ch
-		devcontrol "i2cwrite",0x008F, 2, _ch
-	}else : if (_p1 == 1){
-		devcontrol "i2cwrite",0x008D, 2, _ch
-		devcontrol "i2cwrite",0x008F, 2, _ch
-	}else : if (_p1 == 2){
-		devcontrol "i2cwrite",0x008D, 2, _ch
-		devcontrol "i2cwrite",0x018F, 2, _ch
-	}else : if (_p1 == 3){
-		devcontrol "i2cwrite",0x008D, 2, _ch
-		devcontrol "i2cwrite",0x028F, 2, _ch
-	}else : if (_p1 == 4){
-		devcontrol "i2cwrite",0x008D, 2, _ch
-		devcontrol "i2cwrite",0x038F, 2, _ch
-	}
-	
-	devcontrol "i2cwrite",_p2|0x0081, 2, _ch // set time
+#deffunc geti2c_lux
+
+	;	geti2c_lux
+	;	(照度) rpz_luxを高速に取得
+	;
+	devcontrol "i2cwrite",0x14+0x80,1
+	devcontrol "i2creadw"
+	rpz_lux@=0+stat			; 16bit整数でセンサー値を取得
 	return
-	
-
-#defcfunc integration var _again, var _atime, int _ch
-	devcontrol "i2cwrite",0x0180,2, _ch
-	if stat : return 1
-	
-	set _again, _atime, _ch
-	devcontrol "i2cwrite",0x0380,2, _ch
-	if stat : return 1
-	wait 40
-	repeat
-		devcontrol "i2cwrite",0x93, 1, _ch
-		devcontrol "i2cread", _ch
-		status=0+stat
-		if( (status&0x1 == 1) && ((status&0x10)>>4)==1){
-			devcontrol "i2cwrite",0x0180,2,_ch
-			break
-			}
-		else : wait 100
-	loop
-	devcontrol "i2cwrite",0x14|0xA0,1, _ch
-	devcontrol "i2creadw", _ch	
-	val = 0+stat
-	devcontrol "i2cwrite",0x16|0x80,1, _ch
-	devcontrol "i2creadw", _ch
-	val |= (stat<<16)
-
-	return val
-
-#defcfunc calc_lux int _again, int _atime, int _ch0, int _ch1
-	if(_again == 0){ g = 0.16 }
-	else : if (_again == 1){ g = 1 }
-	else : if (_again == 2){ g = 8 }
-	else : if (_again == 3){ g = 16 }
-	else : if (_again == 4){ g = 120 }
-	
-	if(_atime == 0xED){ t = 50.0 }
-	else : if(_atime == 0xB6){ t = 200.0 }
-	else : if(_atime == 0x24){ t = 600.0 }
-	
-	cpl = (t*g)/60.0
-
-	lux1 = (double(_ch0) - 1.87*double(_ch1)) / cpl
-	lux2 = (0.63*double(_ch0) - double(_ch1)) / cpl
-
-	return max(lux1, lux2)
-	
-#defcfunc get_lux int ch
-	again = 1
-	atime = 0xB6
-	
-	val = integration(again,atime,ch)
-
-	ch0 = val&0xFFFF
-	ch1 = (val>>16)&0xFFFF
-
-	if(max(ch0,ch1) == 65535){
-		again = 0
-		atime = 0xED
-		val = integration(again, atime,ch)
-	} else : if(max(ch0,ch1) < 100){
-		again = 4
-		atime = 0x24
-		val = integration(again, atime,ch)
-	} else : if(max(ch0,ch1) < 300){
-		again = 4
-		atime = 0xB6
-		val = integration(again, atime,ch)
-	} else : if(max(ch0,ch1) < 3000){
-		again = 2
-		atime = 0xB6
-		val = integration(again, atime,ch)
-	}
-
-	devcontrol "i2cwrite",0x0180,2,ch
-	
-	ch0 = val&0xFFFF
-	ch1 = (val>>16)&0xFFFF
-
-	lux = calc_lux(again, atime, ch0, ch1)
-
-	return lux
 
 #global
 
