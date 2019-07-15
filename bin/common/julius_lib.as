@@ -4,19 +4,27 @@
       return
 
     #defcfunc is_recieved int _socidx
+        BEGIN_RECOGOUT = "<RECOGOUT>"
+        END_RECOGOUT   = "</RECOGOUT>"
         socidx = _socidx
         sdim tmpbuf, 4096
-        sockgetm tmpbuf, 2048, socidx, 64
-        if stat == 0 {
-          buf += tmpbuf
-        } else : if stat != 11 {
-          mes "Error while reading socket: stat = " + stat
-          end
+        repeat
+          sockgetm tmpbuf, 1, socidx, 64
+          if stat == 0 {
+            buf += tmpbuf
+          } else : if stat != 11 {
+            mes "Error while reading socket: stat = " + stat
+            end
+          }else {
+            break
+          }
+        loop
+        p1 = instr(buf, 0, BEGIN_RECOGOUT)
+        p2 = instr(buf, p1, END_RECOGOUT)
+        if p1 != -1 && p2 != -1{
+          return 0
         }
-        if instr(buf, 0, ".") == -1 {
-          return -1
-        }
-        return 0
+        return -1
 
     #deffunc get_word_list array words, array cm
         W_PREFIX = "WORD=\""
