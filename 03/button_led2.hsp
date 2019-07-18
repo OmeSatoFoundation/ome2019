@@ -15,7 +15,7 @@
 	ima_btn = gpioin(5)
 	if ima_btn=0{
 	    if mae_btn = 1 {
-		    gpio 22, led
+	        gpio 22, led
 	    	led = 1 - led
 	    }
 	}
