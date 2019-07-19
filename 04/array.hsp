@@ -15,7 +15,7 @@
 
 	gmode 2				; 画像モード
 	repeat 10
-	y(cnt)+=4			; 下に動かす
+	y(cnt)=y(cnt)+4			; 下に動かす
 	if y(cnt)>480 : y(cnt)=-128	; 下まで行ったら上に戻す
 	pos x(cnt),y(cnt)
 	celput 1			; 画像の描画

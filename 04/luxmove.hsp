@@ -9,7 +9,7 @@
 
 *main
 	geti2c_lux
-	x=rpz_lux/2
+	x=rpz_lux/32
 	y=60
 
 	redraw 0
