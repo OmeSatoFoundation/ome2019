@@ -1,0 +1,11 @@
+#include "rpz-gpio.as"
+
+	repeat 5
+
+	gpio 23,1
+	update 5
+
+	gpio 23,0
+	update 5
+
+	loop

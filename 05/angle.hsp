@@ -1,0 +1,27 @@
+#include "rpz-gpio.as"
+#include "rpz-fabo.as"
+
+celload("pika.gif"),2
+celload("nyasu.jpg"),3
+p = 50
+
+spiopen 0
+
+*main
+	data = spiget(0,0)
+	;p = rasp_map(data, 0, 1023, 0, 540)
+
+	redraw 0
+	pos 20,20
+	mes data
+	;color 0,0,0
+	;pos p,100
+	;celput 2
+	;pos 540-p,300
+	;celput 3
+	redraw 1
+
+	wait 10	
+	goto *main
+
+spiclose 0

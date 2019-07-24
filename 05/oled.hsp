@@ -1,0 +1,6 @@
+#include "rpz-gpio.as"
+
+*main
+	gpmes "有機ELディスプレイを見てね\nカンマ（,）で改行するよ"
+	oled "Good Morning,Hello World,Good Bye"
+	

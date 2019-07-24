@@ -1,0 +1,10 @@
+#include "rpz-gpio.as"
+
+*main
+	getspi 0, "kyori_result.txt"
+	volt = rasp_map(data, 0, 1023, 0, 5000)
+	kyori = rasp_map(volt, 3200, 500, 5, 80)
+	res = "距離 : "+kyori
+	gpmes res
+	update 1
+	goto *main
