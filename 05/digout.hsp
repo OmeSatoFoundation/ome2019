@@ -1,11 +1,16 @@
+#include "hsp3dish.as"
 #include "rpz-gpio.as"
 
-	repeat 5
+*main
+	redraw 0
+	font "",20
+	pos 20,20
+	mes "GPIO23のLEDがチカチカします"
+	redraw 1
 
 	gpio 23,1
-	update 5
-
+	wait 100
 	gpio 23,0
-	update 5
+	wait 100
+	goto *main
 
-	loop

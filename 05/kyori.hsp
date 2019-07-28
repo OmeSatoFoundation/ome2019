@@ -1,10 +1,21 @@
+#include "hsp3dish.as"
 #include "rpz-gpio.as"
 
+spiopen 0
+
 *main
-	getspi 0, "kyori_result.txt"
+	data = spiget(0,0)
 	volt = rasp_map(data, 0, 1023, 0, 5000)
 	kyori = rasp_map(volt, 3200, 500, 5, 80)
 	res = "距離 : "+kyori
-	gpmes res
-	update 1
+	
+	redraw 0
+	font "",20
+	pos 20,20
+	mes res
+	redraw 1
+
+	wait 100
 	goto *main
+
+spiclose 0
