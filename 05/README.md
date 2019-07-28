@@ -5,6 +5,9 @@
 https://github.com/FaBoPlatform/FaBoOLED-EROLED096-Python
 
 # 更新履歴
+## 2019/7/27
+- digin,digout,kyori,oledをdishのredrawとwait仕様に変更
+
 ## 2019/7/24
 - anain.hspをHSPのSPIを使う仕様に変更
 - angle.hspをHSPのSPIを使う仕様に変更
