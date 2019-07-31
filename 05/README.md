@@ -41,4 +41,8 @@ https://github.com/FaBoPlatform/FaBoOLED-EROLED096-Python
 
 ## 応用
 - angle.hsp
-    - 抵抗の大きさによって画像の位置が変わる。
+    - 入力の値によって画像の位置が変わる。
+- angle2.hsp
+    - 入力の値によって表示する図形と色が変わる。  
+- kyori.hsp
+    - 距離を測る
