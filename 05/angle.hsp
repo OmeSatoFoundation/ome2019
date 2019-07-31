@@ -1,15 +1,15 @@
 #include "rpz-gpio.as"
 #include "rpz-fabo.as"
 
-celload("alice.gif"),2
-celload("neko.jpg"),3
+celload("alice.png"),2
+celload("neko.png"),3
 p = 50
 
 spiopen 0
 
 *main
 	data = spiget(0,0)
-	p = rasp_map(data, 0, 1023, 0, 540)
+	p = rasp_map(0, 0, 1023, 0, 540)
 
 	redraw 0
 	pos 20,20

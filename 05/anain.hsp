@@ -1,4 +1,3 @@
-#include "hsp3dish.as"
 #include "rpz-gpio.as"
 
 spiopen 0
