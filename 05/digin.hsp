@@ -3,7 +3,8 @@
 
 *main
 	redraw 0
-	mes "ボタンでLEDのON/OFFをきりかえよう"
+	pos 30,30
+	mes "ボタンでLEDを光らせよう"
 	redraw 1
 	if gpioin(24)=1 : goto *onn
 	goto *ofu

@@ -1,5 +1,5 @@
+#include "hsp3dish.as"
 #include "rpz-gpio.as"
-#include "rpz-fabo.as"
 
 celload("alice.png"),2
 celload("neko.png"),3
@@ -8,16 +8,17 @@ p = 50
 spiopen 0
 
 *main
-	data = spiget(0,0)
-	p = rasp_map(0, 0, 1023, 0, 540)
+	data = spiget(1,0)
+	p = rasp_map(data, 0, 1023, 0, 440)
 
 	redraw 0
 	pos 20,20
 	mes data
+	mes p
 	color 0,0,0
 	pos p,100
 	celput 2
-	pos 540-p,300
+	pos 440-p,300
 	celput 3
 	redraw 1
 

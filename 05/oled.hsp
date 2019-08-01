@@ -1,12 +1,14 @@
 #include "hsp3dish.as"
 #include "rpz-gpio.as"
 
-*main
-	redraw 0
-	font "",20
-	pos 20,20
-	mes "有機ELディスプレイを見てね\nカンマ（,）で改行するよ"
-	wait 100
-	oled "Good Morning,Hello World,Good Bye"
-	goto *main
+redraw 0
+font "",20
+pos 20,20
+mes "有機ELディスプレイを見てね\nカンマ（,）で改行するよ"
+redraw 1
+
+oled "Good Morning,Good Bye,Good Afternoon"
+
+wait 100
+
 	

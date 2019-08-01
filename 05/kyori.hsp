@@ -4,6 +4,7 @@
 spiopen 0
 
 *main
+
 	data = spiget(0,0)
 	volt = rasp_map(data, 0, 1023, 0, 5000)
 	kyori = rasp_map(volt, 3200, 500, 5, 80)
@@ -11,7 +12,7 @@ spiopen 0
 	
 	redraw 0
 	font "",20
-	pos 20,20
+	pos 30,30
 	mes res
 	redraw 1
 
