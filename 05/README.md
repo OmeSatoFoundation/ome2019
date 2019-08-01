@@ -7,6 +7,7 @@ https://github.com/FaBoPlatform/FaBoOLED-EROLED096-Python
 # 更新履歴
 ## 2019/8/1
 - プログラムの動作確認
+- PWM追加
 
 ## 2019/7/27
 - digin,digout,kyori,oledをdishのredrawとwait仕様に変更
