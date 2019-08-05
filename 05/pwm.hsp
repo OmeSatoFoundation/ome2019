@@ -10,7 +10,7 @@ gpio 27,1
 repeat 200
 if cnt < 10 : gpio 17,1 : else : gpio 17,0
 if cnt < 50 : gpio 18,1 : else : gpio 18,0
-if cnt < 100 : gpio 22,1 : else : gpio 2,0
+if cnt < 100 : gpio 22,1 : else : gpio 22,0
 loop
 
 await 1
