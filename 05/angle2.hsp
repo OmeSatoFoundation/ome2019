@@ -27,7 +27,7 @@ spiopen 0
 
 	redraw 1
 
-	wait 100
+	wait 10
 	goto *main
 
 spiclose 0
