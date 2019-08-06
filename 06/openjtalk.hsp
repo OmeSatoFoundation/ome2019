@@ -1,0 +1,10 @@
+#include "hsp3dish.as"
+#include "jtalk.as"
+
+redraw 0
+mes "発話開始"
+mes "「子どもIT未来塾」"
+redraw 1
+
+jtalk "子どもIT未来塾"
+stop
