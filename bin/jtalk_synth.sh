@@ -10,14 +10,14 @@ usage_exit() {
 	exit 1
 }
 
-OUTPUTPATH=/tmp/jsay.wav
+OUTPUTPATH=
 SPEAKING=
 VOCAL=
 I_FLAG=
 W_FLAG=
 O_FLAG=
 
-while getopts :m:w:i OPT
+while getopts :m:o:w:i OPT
 do
   case $OPT in
     i) I_FLAG=1
@@ -46,6 +46,10 @@ fi
 
 if [ -z "$SPEAKING" ]; then
 	SPEEAKING=$(cat -)
+fi
+
+if [ -z "$OUTPUTPATH" ]; then
+  OUTPUTPATH=/tmp/jsay.wav
 fi
 
 
