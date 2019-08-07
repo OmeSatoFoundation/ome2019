@@ -6,5 +6,6 @@ mes "発話開始"
 mes "「子どもIT未来塾」"
 redraw 1
 
-jtalk "子どもIT未来塾"
+jtload "子どもIT未来塾", 0, 2
+mmplay 0
 stop

@@ -8,5 +8,6 @@ mes "日付を読み上げます"
 mes date
 redraw 1
 
-jtalk date
+jtload date, 0, 2
+mmplay 0
 stop
