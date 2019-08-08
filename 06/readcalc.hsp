@@ -10,7 +10,7 @@ mes "" + a + " + " + b
 redraw 1
 
 ; 問題読み上げ
-jtload "" + a + "たす" + 2, 0, 2
+jtload "" + a + "たす" + 2, 0
 mmplay 0
 wait 100
 
@@ -18,7 +18,7 @@ wait 100
 kotae = a + b
 
 ; 答え読み上げ
-jtload "こたえは" + kotae, 1, 2
+jtload "こたえは" + kotae, 1
 mmplay 1
 
 ; 答え描画
