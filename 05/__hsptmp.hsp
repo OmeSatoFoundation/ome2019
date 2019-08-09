@@ -8,7 +8,7 @@ spiopen 0
 	data = spiget(2,0)
 	volt = rasp_map(data, 0, 1023, 0, 5000)
 	kyori = rasp_map(volt, 3200, 500, 5, 80)
-	kyori2 = (-1*data/36)+(845/9)
+	kyori2 = (data/36)+(845/9)
 	res = "距離 : "+kyori+" "+kyori2
 	
 	redraw 0

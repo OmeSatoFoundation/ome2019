@@ -15,11 +15,8 @@ spiopen 0
 	pos 20,20
 	mes data
 	mes p
-	color 0,0,0
-	pos p,100
+	pos 0,0
 	celput 2
-	pos 440-p,300
-	celput 3
 	redraw 1
 
 	wait 10	
