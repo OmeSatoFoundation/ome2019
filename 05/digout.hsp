@@ -5,7 +5,7 @@
 	redraw 0
 	font "",20
 	pos 20,20
-	mes "GPIO23のLEDがチカチカします"
+	mes "センサーが動いたり止まったりします"
 	redraw 1
 
 	gpio 23,1

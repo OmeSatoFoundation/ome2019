@@ -5,11 +5,9 @@ spiopen 0
 
 *main
 
-	data = spiget(2,0)
-	volt = rasp_map(data, 0, 1023, 0, 5000)
-	kyori = rasp_map(volt, 3200, 500, 5, 80)
-	kyori2 = (-1*data/36)+(845/9)
-	res = "距離 : "+kyori+" "+kyori2
+	data = spiget(0,0)
+	kyori = -1*(data*5000/1023)/36+845/9
+	res = "距離 : "+kyori
 	
 	redraw 0
 	font "",20
@@ -17,7 +15,7 @@ spiopen 0
 	mes res
 	redraw 1
 
-	wait 100
+	wait 10
 	goto *main
 
 spiclose 0

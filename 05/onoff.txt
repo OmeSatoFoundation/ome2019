@@ -1,0 +1,1 @@
+Using driver default on device /dev/lirc0
