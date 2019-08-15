@@ -1,3 +1,3 @@
 #! /bin/sh
 
-julius -C main.jconf -C am-gmm.jconf -demo $*
+julius -C julius_conf/main.jconf -C julius_conf/am-gmm.jconf -demo $*
