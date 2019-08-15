@@ -1,6 +1,8 @@
 #module
-    #deffunc init_julius
+    #deffunc init_julius str dicpath
       sdim buf, 4096
+      exec "killall -s9 julius"
+      exec "julius_daemon.sh \"" + dicpath + "\" &"
       return
 
     #defcfunc is_recieved int _socidx
