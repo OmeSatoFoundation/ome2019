@@ -10,6 +10,7 @@
 	;
 
 #module
+
 #deffunc gpmes str _p1
 
 	;	gpmes "メッセージ"
