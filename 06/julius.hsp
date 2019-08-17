@@ -27,7 +27,6 @@ repeat -1
       if cm(cnt) > 0.5 {
           ans =  "" + cnt + ": " + words(cnt) + " CM = " + cm(cnt)
       }
-    redraw 1
     loop
   }
   redraw 0
