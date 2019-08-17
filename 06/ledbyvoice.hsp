@@ -33,4 +33,9 @@ repeat -1
       }
     loop
   }
+  redraw 0
+  pos 0,0
+  mes "˜b‚µ‚©‚¯‚ÄLED‚ÌON‚ÆOFF‚ð‚µ‚æ‚¤"
+  redraw 1
+  await 30
 loop
