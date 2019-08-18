@@ -25,7 +25,6 @@ if stat != 0 {
 sdim wrods, 4096, 0
 ddim cm, 0
 repeat -1
-  redraw 0
   if is_recieved(sockidx) = 0 {
     get_word_list words, cm
     repeat length(words)
