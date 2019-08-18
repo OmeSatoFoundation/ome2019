@@ -6,15 +6,15 @@
 	pos 30,30
 	mes "デジタル入力そうちでLEDを光らせよう"
 	redraw 1
-	if gpioin(24)=1 : goto *onn
-	goto *ofu
+	if gpioin(24)=1 : goto *digital_on
+	goto *digital_off
         
-*onn
+*digital_on
 	gpio 17, 1
 	wait 10
 	goto *main
 
-*ofu
+*digital_off
 	gpio 17, 0
 	wait 10
 	goto *main 
