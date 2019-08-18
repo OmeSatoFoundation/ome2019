@@ -1,7 +1,12 @@
 #include "hsp3dish.as"
 #include "julius.as"
 
-init_julius
+redraw 0
+pos 0, 0
+mes "Loading Julius..."
+redraw 1
+
+init_julius "/home/pi/ome/06/onoff.dic"
 
 sockidx = 0
 domain = "127.0.0.1"
@@ -35,7 +40,7 @@ repeat -1
   }
   redraw 0
   pos 0,0
-  mes "˜b‚µ‚©‚¯‚ÄLED‚ÌON‚ÆOFF‚ğ‚µ‚æ‚¤"
+  mes "è©±ã—ã‹ã‘ã¦LEDã®ONã¨OFFã‚’ã—ã‚ˆã†"
   redraw 1
   await 30
 loop

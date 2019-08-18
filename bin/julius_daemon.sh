@@ -12,6 +12,6 @@ fi
 
 DIC_FILE=$1
 
-julius -w $DIC_FILE -quiet -C $SCRIPT_DIR/julius_conf/default.jconf -module > /dev/null &
+julius -w $DIC_FILE -quiet -C $SCRIPT_DIR/julius_conf/default.jconf -module > /tmp/jlog.txt 2> /tmp/jerr.txt &
 echo $!
 sleep 2
