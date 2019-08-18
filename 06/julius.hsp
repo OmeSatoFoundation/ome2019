@@ -1,6 +1,11 @@
 #include "hsp3dish.as"
 #include "julius.as"
 
+redraw 0
+pos 0, 0
+mes "Loading Julius..."
+redraw 1
+
 init_julius "/home/pi/ome/06/kudamono.dic"
 
 sockidx = 0
@@ -10,13 +15,13 @@ PORT = 10500
 sockopen sockidx, domain, PORT
 
 if stat != 0 {
-*errorj
+*errorjulius
   redraw 0
   pos 0, 0
   mes "Error in opening socket"
   redraw 1
   await 30
-  goto *errorj
+  goto *errorjulius
   stop
 }
 
