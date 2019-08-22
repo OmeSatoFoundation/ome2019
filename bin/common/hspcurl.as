@@ -1,11 +1,6 @@
 ;	curl and easy xml parse module
 #ifndef __hspcurl__
 #define __hspcurl__
-
-#define htmltag xmltag
-#define htmlresult xmlresult
-#define htmlload xmlload 
-#define htmltable xmltable
 #module
 
 #deffunc curl str _p1, str _p2
@@ -13,18 +8,14 @@
 	;	curl "URL", "出力ファイル名"
 	exec "curl \""+_p1+"\" -o "+_p2
 	return 0
+
 #deffunc xmltag str _p1, str _p2, int _p3
+
 	;	特定のXMLタグを集める
 	;	xmltag "XMLファイル名","タグ名",個数(0=max)
 	;	( 例: xmltag "data.xml","title" )
 	;	結果は変数bufに返ります、「xmlresult 変数」で取得できます
 	;
-	htmltagattr _p1, _p2, "", _p3
-	return 0
-#deffunc htmltagattr str _p1, str _p2, str _attr, int _p3
-	; parse html with attr (all attribute between tag name and ">" must be supplied)
-	; ex.) <p class="class1" id="id1">text</p>
-	; "class=\"class1\" id=\"id1\"" must be passed to _attr
 	sdim buf@,$10000
 	sdim xml,$10000
 	sdim s1,256
@@ -34,12 +25,8 @@
 	i=0
 	max=_p3
 	if max<=0 : max=100
-	attr = ""
-	if _attr != "" : attr = " " + _attr
-	tagstr="<"+_p2+attr+">"
+	tagstr="<"+_p2+">"
 	tagstr2="</"+_p2+">"
-	mes tagstr
-	mes tagstr2
 	repeat max
 		res=instr(xml,i,tagstr)
 		res2=instr(xml,i,tagstr2)
@@ -53,6 +40,7 @@
 		buf@+=s1+"\n"
 	loop
 	return 0
+
 #deffunc xmlresult var _p1
 
 	;	xmltagの結果を変数に取得する
