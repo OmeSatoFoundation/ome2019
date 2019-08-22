@@ -1,0 +1,60 @@
+#!/usr/bin/env python2
+#encoding:utf-8
+import sys
+import ast
+from bs4 import BeautifulSoup
+def htmltag(html, tag):
+    return htmltagattr(html, tag, {})
+def htmltagattr(html, tag, attrs):
+    soup = BeautifulSoup(html, 'html.parser')
+    result = soup.find_all(tag, attrs=attrs)
+    data = []
+    for i in result:
+        data.append(i)
+        print(i)
+    return data
+def htmlsrc(html, tag):
+    soup = BeautifulSoup(html, 'html.parser')
+    result = soup.find_all(tag)
+    data = []
+    for i in result:
+        data.append(i['src'])
+        print(i['src'])
+    return data
+def htmltext(html, tag):
+    soup = BeautifulSoup(html, 'html.parser')
+    result = soup.find_all(tag)
+    data = []
+    for i in result:
+        for j in i:
+            data.append(j)
+            print(j)
+    return data
+def htmllink(html, tag):
+    soup = BeautifulSoup(html, 'html.parser')
+    result = soup.find_all(tag)
+    data = []
+    for i in result:
+        data.append(i['href'])
+        print(i['href'])
+    return data
+def htmltable():
+    pass
+def main():
+    if(sys.argv[1] == '1'):
+        htmltag(sys.argv[2], sys.argv[3])
+    elif(sys.argv[1] == '2'):
+        if(len(sys.argv[4]) == 0):
+            attrs = {}
+        else:
+            attrs = ast.literal_eval(sys.argv[4]) 
+        htmltagattr(sys.argv[2], sys.argv[3], attrs)
+    elif(sys.argv[1] == '3'):
+        htmlsrc(sys.argv[2], sys.argv[3])
+    elif(sys.argv[1] == '4'):
+        htmltext(sys.argv[2], sys.argv[3])
+    elif(sys.argv[1] == '5'):
+        htmllink(sys.argv[2], sys.argv[3])
+if __name__ == '__main__':
+    main()
+
