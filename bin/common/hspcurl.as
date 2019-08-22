@@ -2,6 +2,7 @@
 #ifndef __hspcurl__
 #define __hspcurl__
 
+#define htmltag xmltag
 #define htmlresult xmlresult
 #define htmlload xmlload 
 #define htmltable xmltable
@@ -18,9 +19,9 @@
 	;	( 例: xmltag "data.xml","title" )
 	;	結果は変数bufに返ります、「xmlresult 変数」で取得できます
 	;
-	htmltag _p1, _p2, "", _p3
+	htmltagattr _p1, _p2, "", _p3
 	return 0
-#deffunc htmltag str _p1, str _p2, str _attr, int _p3
+#deffunc htmltagattr str _p1, str _p2, str _attr, int _p3
 	; parse html with attr (all attribute between tag name and ">" must be supplied)
 	; ex.) <p class="class1" id="id1">text</p>
 	; "class=\"class1\" id=\"id1\"" must be passed to _attr
@@ -33,8 +34,12 @@
 	i=0
 	max=_p3
 	if max<=0 : max=100
-	tagstr="<"+_p2+" "+_attr+">"
+	attr = ""
+	if _attr != "" : attr = " " + _attr
+	tagstr="<"+_p2+attr+">"
 	tagstr2="</"+_p2+">"
+	mes tagstr
+	mes tagstr2
 	repeat max
 		res=instr(xml,i,tagstr)
 		res2=instr(xml,i,tagstr2)
