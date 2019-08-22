@@ -1,0 +1,13 @@
+#include "hsp3cl.as"
+
+	adrs="192.168.1.111"
+	port=12222
+	sockopen 0, adrs, port
+	if stat : mes "socket error "+stat : goto *failed
+	a = ""
+	sockget a, 64
+	mes a
+	
+*failed
+	sockclose 0
+	stop
