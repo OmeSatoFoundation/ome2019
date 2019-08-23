@@ -1,21 +1,47 @@
 #ifndef HTMLPARSER_AS
 #define HTMLPARSER_AS
+#include "cmdexec.as"
 #module
 
-#deffunc htmltag str html, str tag
-	exec "htmlparser 1 '" + html + "' " + tag
+#deffunc htmltag str html, str tag, var v
+	creattmp _t
+	notesel _buf
+	noteadd html
+	notesave _t
+	cmdexec "htmlparser 1 " + _t + " " + tag, v
+	deltmp _t
 	return
-#deffunc htmltagattr str html, str tag, str attrs
-	exec "htmlparser 2 " + html + " " + tag + " " + attrs
+#deffunc htmltagattr str html, str tag, str attrs, var v
+	creattmp _t
+	notesel _buf
+	noteadd html
+	notesave _t
+	cmdexec "htmlparser 2 " + _t + " " + tag + " " + attrs, v
+	deltmp _t
 	return
-#deffunc htmlimg
-	exec "htmlparser 3 " + html + " " + tag
+#deffunc htmlimg str html, str tag, var v
+	creattmp _t
+	notesel _buf
+	noteadd html
+	notesave _t
+	cmdexec "htmlparser 3 " + _t + " " + tag, v
+	deltmp _t
 	return
-#deffunc htmltext
-	exec "htmlparser 4 " + html + " " + tag
+#deffunc htmltext str html, str tag, var v
+	creattmp _t
+	notesel _buf
+	noteadd html
+	notesave _t
+	cmdexec "htmlparser 4 " + _t + " " + tag, v
+	deltmp _t
 	return
-#deffunc htmllink
-	exec "htmlparser 5 " + html + " " + tag
+#deffunc htmllink str html, str tag, var v
+	creattmp _t
+	notesel _buf
+	noteadd html
+	notesave _t
+	cmdexec "htmlparser 5 " + _t + " " + tag, v
+	deltmp _t
 	return
 #global
 #endif

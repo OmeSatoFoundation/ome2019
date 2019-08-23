@@ -18,8 +18,8 @@ def htmlsrc(html, tag):
     result = soup.find_all(tag)
     data = []
     for i in result:
-        data.append(i['src'])
-        print(i['src'])
+        data.append(i.get('src'))
+        print(i.get('src'))
     return data
 def htmltext(html, tag):
     soup = BeautifulSoup(html, 'html.parser')
@@ -35,26 +35,29 @@ def htmllink(html, tag):
     result = soup.find_all(tag)
     data = []
     for i in result:
-        data.append(i['href'])
-        print(i['href'])
+        data.append(i.get('href'))
+        print(i.get('href'))
     return data
 def htmltable():
     pass
 def main():
+    f = open(sys.argv[2])
+    s = "".join(f.readlines())
     if(sys.argv[1] == '1'):
-        htmltag(sys.argv[2], sys.argv[3])
+        htmltag(s, sys.argv[3])
     elif(sys.argv[1] == '2'):
         if(len(sys.argv[4]) == 0):
             attrs = {}
         else:
-            attrs = ast.literal_eval(sys.argv[4]) 
-        htmltagattr(sys.argv[2], sys.argv[3], attrs)
+            attrs = '{"' + sys.argv[4].split(':')[0] + '":"' + ' '.join(sys.argv[4].split(':')[1].split(',')) + '"}'
+            attrs = ast.literal_eval(attrs) 
+        htmltagattr(s, sys.argv[3], attrs)
     elif(sys.argv[1] == '3'):
-        htmlsrc(sys.argv[2], sys.argv[3])
+        htmlsrc(s, sys.argv[3])
     elif(sys.argv[1] == '4'):
-        htmltext(sys.argv[2], sys.argv[3])
+        htmltext(s, sys.argv[3])
     elif(sys.argv[1] == '5'):
-        htmllink(sys.argv[2], sys.argv[3])
+        htmllink(s, sys.argv[3])
 if __name__ == '__main__':
     main()
 
