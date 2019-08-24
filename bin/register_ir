@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 # -*- encoding: utf-8 -*-
 
-import sys
+import sys, threading
 import subprocess
 from subprocess import Popen
 
@@ -29,6 +29,32 @@ SIGNALS_TEMPLATE = """
 	end raw_codes
 """
 
+
+mode2 = None
+mode2_buf = ""
+patterns_cnt = 0
+q_pressed = False
+def mode2_thread():
+    global mode2
+    global mode2_buf
+    global patterns_cnt
+    global q_pressed
+    q_pressed = False
+    mode2 = Popen(CMD, shell=True, stdout=subprocess.PIPE)
+    mode2_buf = ""
+    while q_pressed == False:
+        line = mode2.stdout.readline().decode('utf-8')
+        mode2_buf += line
+        sys.stdout.write(line)
+        sys.stdout.flush()
+        if not line:
+            continue
+        patterns_cnt += 1
+    mode2.terminate()
+
+
+
+
 def convert_pattern(mode2_string):
     signals = [(line.split()[0], line.split()[1]) for line in mode2_string.strip().split('\n')[1:]]
     idx = 0
@@ -51,10 +77,13 @@ def convert_pattern(mode2_string):
     return result
 
 def main():
+    global mode2
+    global mode2_buf
+    global patterns_cnt
+    global q_pressed
     # get remote name
     remote_name = input('リモコンの名前を入力してください。')
     # while get signal name
-    patterns_cnt = 0
     patterns = {}
     try:
         while True:
@@ -63,20 +92,13 @@ def main():
                 continue
             print('赤外線を照射してください')
             # mode2
-            mode2 = Popen(CMD, shell=True, stdout=subprocess.PIPE)
+            mthread = threading.Thread(target=mode2_thread)
+            mthread.start()
             input('照射が終わったらqを入力した後Enterを押してください')
-            buf = ""
-            while True:
-                line = mode2.stdout.readline().decode('utf-8')
-                buf += line
-                sys.stdout.write(line)
-                if not line:
-                    break
-                patterns_cnt += 1
-            # mode2.terminate()
+            q_pressed = True
 
             # convert_pattern
-            patterns[signal_name] = convert_pattern(buf)
+            patterns[signal_name] = convert_pattern(mode2_buf)
     except EOFError:
         pass
 

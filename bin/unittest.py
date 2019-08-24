@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+import time
+import sys
 
 a=  """space 123
 pulse 456
@@ -11,4 +13,7 @@ pulse 234
 space 567
 pulse 890 """
 
-print(a)
+for b in a.split('\n'):
+    print(b)
+    sys.stdout.flush()
+    time.sleep(1)
