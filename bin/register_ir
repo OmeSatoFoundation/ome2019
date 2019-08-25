@@ -58,7 +58,7 @@ def mode2_thread():
 def convert_pattern(mode2_string):
     signals = [(line.split()[0], line.split()[1]) for line in mode2_string.strip().split('\n')[1:]]
     idx = 0
-    while signals[idx][0] == 'space':
+    while signals[idx][0] != 'pulse':
         idx += 1
 
     signals = signals[idx:]
