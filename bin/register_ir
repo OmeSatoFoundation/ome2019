@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- encoding: utf-8 -*-
 
+import select
 import sys, threading
 import subprocess
 from subprocess import Popen
@@ -42,14 +43,18 @@ def mode2_thread():
     q_pressed = False
     mode2 = Popen(CMD, shell=True, stdout=subprocess.PIPE)
     mode2_buf = ""
+    poll_obj = select.poll()
+    poll_obj.register(mode2.stdout, select.POLLIN)
     while q_pressed == False:
-        line = mode2.stdout.readline().decode('utf-8')
-        mode2_buf += line
-        sys.stdout.write(line)
-        sys.stdout.flush()
-        if not line:
-            continue
-        patterns_cnt += 1
+        poll_result = poll_obj.poll(0)
+        if poll_result:
+            line = mode2.stdout.readline().decode('utf-8')
+            mode2_buf += line
+            sys.stdout.write(line)
+            sys.stdout.flush()
+            if not line:
+                continue
+            patterns_cnt += 1
     mode2.terminate()
 
 
