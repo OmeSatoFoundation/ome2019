@@ -4,7 +4,7 @@
 
 -----
 
-pi@localhost$ ./register\_ir  
+pi@localhost$ sudo ./register\_ir  
 リモコンの名前を入力してください。**fan**  
 信号の名前を入力してください。終了する場合はCtrl+Dを押してください。**onoff**  
 赤外線を照射してください  
