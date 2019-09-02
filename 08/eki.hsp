@@ -1,0 +1,22 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+
+;	駅データ(山手線)を表示する
+;	駅データ.jp の路線APIを呼び出して使用
+;	http://www.ekidata.jp/doc/line.php
+;
+;	路線コードを調べる
+;	http://ekidata999.blog.fc2.com/blog-category-21.html
+;
+code=11302	; 路線コード
+
+tmpfile = "/tmp/eki.html"
+tag = "station_name"
+curl "http://www.ekidata.jp/api/l/"+code+".xml",tmpfile
+notesel buf
+noteload tmpfile
+htmltag buf, tag, buf
+htmltext buf, tag, buf
+mes buf
+stop
