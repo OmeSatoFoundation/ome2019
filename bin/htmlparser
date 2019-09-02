@@ -29,6 +29,10 @@ class HTMLParser:
         result = self.soup.find_all(tag)
         for i in result:
             self.data.append(i.get('href'))
+    def htmlval(self, tag, attr):
+        result = self.soup.find_all(tag)
+        for i in result:
+            self.data.append(i.get(attr))
     def parseattr(self, attr):
         if(len(attr) == 0):
             a = {}
@@ -37,8 +41,13 @@ class HTMLParser:
             a = ast.literal_eval(a) 
         return a
     def emitdata(self):
+        if self.data == None:
+            return 1
         for i in self.data:
+            if i == None:
+                continue
             print(i.encode('utf-8'))
+        return 0
 def usage():
     print('usage')
     sys.exit()
@@ -68,7 +77,6 @@ def main():
             continue
         elif o in ['-h', '--help']:
             usage()
-
     if(s):
         hp = HTMLParser(filename)
     else:
@@ -83,6 +91,8 @@ def main():
         hp.htmllink(tag)
     elif(command == 'htmltag'):
         hp.htmltag(tag)
-    hp.emitdata()
+    elif(command == 'htmlval'):
+        hp.htmlval(tag, attr)
+    return hp.emitdata()
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
