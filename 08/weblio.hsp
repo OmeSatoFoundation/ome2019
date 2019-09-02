@@ -1,0 +1,13 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+creattmp tmpfile
+
+word = "hello"
+url = "https://ejje.weblio.jp/content/" + word
+curl url, tmpfile
+notesel buf
+noteload tmpfile
+htmltagattr buf, "td", "class:content-explanation", buf
+htmltext buf, "td", buf
+mes buf
