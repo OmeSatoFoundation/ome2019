@@ -1,0 +1,23 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+
+; 取得したHTMLページ用の一時ファイルの場所
+tmpfile="/tmp/yahoo.html"
+; yahoo.co.jpからHTMLを取得して保存
+curl "https://www.yahoo.co.jp/", tmpfile
+; ファイルを読み込むバッファ変数の設定
+notesel buf
+; HTMLファイルをバッファ変数へ読み込む
+noteload tmpfile
+; バッファ変数内のtitleタグを探して上書き
+htmltag buf, "title", buf
+; バッファ変数を表示
+mes buf
+; 余計な<>を取り除いてテキストのみに
+htmltext buf, "title", buf
+; バッファ変数を表示
+mes buf
+; プログラム終了
+stop
+
