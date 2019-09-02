@@ -33,6 +33,10 @@ class HTMLParser:
         result = self.soup.find_all(tag)
         for i in result:
             self.data.append(i.get(attr))
+    def htmltagn(self, tag, pos, n):
+        result = self.soup.find_all(tag)
+        for i in result[pos:pos+n]:
+            self.data.append(i)
     def parseattr(self, attr):
         if(len(attr) == 0):
             a = {}
@@ -57,8 +61,10 @@ def main():
     tag = ''
     command = ''
     attr = ''
+    pos = 0
+    number = 1
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'a:t:c:f:hs', ['attr=', 'tag=','command=','filename=','help','stdin'])
+        opts, args = getopt.getopt(sys.argv[1:], 'a:t:c:f:p:n:hs', ['attr=', 'tag=','command=','filename=','pos=','number=','help','stdin'])
     except getopt.GetoptError as e:
         print(e)
         usage()
@@ -75,6 +81,10 @@ def main():
         elif o in ['-s', '--stdin']:
             # s and filename can be overriden by explict -f, --file option
             continue
+        elif o in ['-p', '--pos']:
+            pos = int(a)
+        elif o in ['-n', '--number']:
+            number = int(a)
         elif o in ['-h', '--help']:
             usage()
     if(s):
@@ -93,6 +103,8 @@ def main():
         hp.htmltag(tag)
     elif(command == 'htmlval'):
         hp.htmlval(tag, attr)
+    elif(command == 'htmltagn'):
+        hp.htmltagn(tag, pos, number)
     return hp.emitdata()
 if __name__ == '__main__':
     sys.exit(main())
