@@ -2,31 +2,33 @@
 #encoding:utf-8
 import sys
 import ast
+import getopt
 from bs4 import BeautifulSoup
 
 class HTMLParser:
-    def __init__(self, filename):
-        self.filename = filename
-        self.html = open(self.filename)
+    def __init__(self, f):
+        self.html = f 
         self.soup = BeautifulSoup(self.html, 'html.parser')
         self.data = []
     def htmlsrc(self, tag):
         result = self.soup.find_all(tag)
         for i in result:
             self.data.append(i.get('src'))
+    def htmltag(self, tag):
+        self.htmltagattr(tag, {})
     def htmltagattr(self, tag, attr):
         result = self.soup.find_all(tag, attrs=attr)
         for i in result:
-            data.append(i)
+            self.data.append(i)
     def htmltext(self, tag):
         result = self.soup.find_all(tag)
         for i in result:
             for j in i:
-                data.append(j)
+                self.data.append(j)
     def htmllink(self, tag):
         result = self.soup.find_all(tag)
         for i in result:
-            data.append(i.get('href'))
+            self.data.append(i.get('href'))
     def parseattr(self, attr):
         if(len(attr) == 0):
             a = {}
@@ -36,21 +38,51 @@ class HTMLParser:
         return a
     def emitdata(self):
         for i in self.data:
-            print(i)
-
-
+            print(i.encode('utf-8'))
+def usage():
+    print('usage')
+    sys.exit()
 def main():
-    hp = HTMLParser(sys.argv[2])
-    if(sys.argv[1] == 'htmlsrc'):
-        hp.htmlsrc(sys.argv[3])
-    elif(sys.argv[1] == 'htmltagattr'):
-        hp.htmltagattr(sys.argv[3], hp.parseattr(sys.argv[4]))
-    elif(sys.argv[1] == 'htmltext'):
-        hp.htmltext(sys.argv[3])
-    elif(sys.argv[1] == 'htmllink'):
-        hp.htmllink(sys.argv[3])
+    s = True
+    filename = sys.stdin
+    tag = ''
+    command = ''
+    attr = ''
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'a:t:c:f:hs', ['attr=', 'tag=','command=','filename=','help','stdin'])
+    except getopt.GetoptError as e:
+        print(e)
+        usage()
+    for o, a in opts:
+        if o in ['-t', '--tag']:
+            tag = a
+        elif o in ['-c', '--command']:
+            command = a
+        elif o in ['-a', '--attr']:
+            attr = a
+        elif o in ['-f', '--filename']:
+            filename = a
+            s = False
+        elif o in ['-s', '--stdin']:
+            # s and filename can be overriden by explict -f, --file option
+            continue
+        elif o in ['-h', '--help']:
+            usage()
+
+    if(s):
+        hp = HTMLParser(filename)
+    else:
+        hp = HTMLParser(open(filename))
+    if(command == 'htmlsrc'):
+        hp.htmlsrc(tag)
+    elif(command == 'htmltagattr'):
+        hp.htmltagattr(tag, hp.parseattr(attr))
+    elif(command == 'htmltext'):
+        hp.htmltext(tag)
+    elif(command == 'htmllink'):
+        hp.htmllink(tag)
+    elif(command == 'htmltag'):
+        hp.htmltag(tag)
     hp.emitdata()
-
-
 if __name__ == '__main__':
     main()

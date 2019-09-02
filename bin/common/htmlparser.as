@@ -8,7 +8,8 @@
 	notesel _buf
 	noteadd html
 	notesave _t
-	cmdexec "htmlparser 1 " + _t + " " + tag, v
+	memset _buf, '', notesize
+	cmdexec "htmlparser --command=htmltag --filename=" + _t + " --tag=" + tag, v
 	deltmp _t
 	return
 #deffunc htmltagattr str html, str tag, str attrs, var v
@@ -16,15 +17,17 @@
 	notesel _buf
 	noteadd html
 	notesave _t
-	cmdexec "htmlparser 2 " + _t + " " + tag + " " + attrs, v
+	memset _buf, '', notesize
+	cmdexec "htmlparser --command=htmltagattr --filename=" + _t + " --tag" + tag + " --attr" + attrs, v
 	deltmp _t
 	return
-#deffunc htmlimg str html, str tag, var v
+#deffunc htmlsrc str html, str tag, var v
 	creattmp _t
 	notesel _buf
 	noteadd html
 	notesave _t
-	cmdexec "htmlparser 3 " + _t + " " + tag, v
+	memset _buf, '', notesize
+	cmdexec "htmlparser --command=htmlsrc --filename" + _t + " --tag=" + tag, v
 	deltmp _t
 	return
 #deffunc htmltext str html, str tag, var v
@@ -32,7 +35,8 @@
 	notesel _buf
 	noteadd html
 	notesave _t
-	cmdexec "htmlparser 4 " + _t + " " + tag, v
+	memset _buf, '', notesize
+	cmdexec "htmlparser --command=htmltext --filename=" + _t + " --tag=" + tag, v
 	deltmp _t
 	return
 #deffunc htmllink str html, str tag, var v
@@ -40,7 +44,8 @@
 	notesel _buf
 	noteadd html
 	notesave _t
-	cmdexec "htmlparser 5 " + _t + " " + tag, v
+	memset _buf, '', notesize
+	cmdexec "htmlparser --command=htmllink --filename" + _t + " --tag" + tag, v
 	deltmp _t
 	return
 #global
