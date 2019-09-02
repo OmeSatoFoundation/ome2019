@@ -1,0 +1,21 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+
+;	郵便番号から住所を表示する
+;	http://zip.cgis.biz/
+;
+code="1980082"	; 郵便番号
+
+tmpfile = "/tmp/zip.html"
+curl "http://zip.cgis.biz/xml/zip.php?zn="+code, tmpfile
+notesel buf
+noteload tmpfile
+htmltag buf, "value", buf
+htmlval buf, "value", "state", state
+htmlval buf, "value", "city", city
+htmlval buf, "value", "address", address
+mes "state " + state
+mes "city " + city
+mes "address " + address
+stop
