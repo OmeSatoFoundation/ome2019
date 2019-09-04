@@ -2,7 +2,13 @@
 #define HTMLPARSER_AS
 #include "cmdexec.as"
 #module
-
+#deffunc splitnl var html, var v
+	sdim _lf
+	poke _lf, , 10
+	strrep html, "\n", _lf
+	strrep html, "\r", _lf
+	split html, _lf, v
+	return
 #deffunc htmltag str html, str tag, var v
 	creattmp _t
 	notesel _buf
