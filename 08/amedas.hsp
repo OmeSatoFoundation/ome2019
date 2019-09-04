@@ -1,0 +1,43 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+
+sdim result, 32, 24*6
+sdim jikan, 32, 24
+sdim kion, 32, 24
+sdim kousui, 32, 24
+sdim kazamuki, 32, 24
+sdim fusoku, 32, 24
+sdim nisyou, 32, 24
+sdim lf
+poke lf, , 10
+
+creattmp tmpfile
+curl "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30", tmpfile
+notesel buf
+noteload tmpfile
+htmltagattr buf, "table", "id:tbl_list", buf
+htmltagn buf, "td", 12, -1, buf
+htmluntag buf, buf
+
+strrep buf, "\n", lf
+strrep buf, "\r", lf
+split buf, lf, result
+
+i = 0
+repeat 24 
+jikan(i) = result(i*6+0)
+kion(i) = result(i*6+1)
+kousui(i) = result(i*6+2)
+kazamuki(i) = result(i*6+3)
+fusoku(i) = result(i*6+4)
+nisyou(i) = result(i*6+5)
+i = i + 1
+loop
+
+mes "時刻 " + "気温 " + "降水 "  
+i = 0
+repeat 24 
+mes str(jikan(i)) + "  " + str(kion(i)) + "   " + str(kousui(i))
+i = i + 1
+loop
