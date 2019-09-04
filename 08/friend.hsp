@@ -6,20 +6,22 @@
 friend_ip = "127.0.0.1"
 ; 友達のポート番号 
 friend_port = 3000
-; URL
+; ダウンロードするウェブページのURLを指定
 url = friend_ip + ":" + friend_port + "/index.html"
-; 一時ファイルの作成
+
+; 一時ファイルを用意
 creattmp tmpfile
-; URLで指定したデータをダウンロードして一時ファイルに保存
+; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
 curl url, tmpfile
-; ダウンロードしたファイルを読み込むバッファ(buf)の指定
+; ダウンロードした一時ファイルを読み込む変数を指定
 notesel buf
-; ダウンロードしたHTMLファイルを指定したバッファ(buf)に読み込む
+; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
 noteload tmpfile
-; バッファから一番最初のulタグを1個分探してバッファ(buf)を上書き
+; bufから一番最初のulタグを1個分探して、結果をbufに入れる
 htmltagn buf, "ul", 0, 1, buf
-; 探したulタグを表示
+; 結果を出力 
 mes buf
+
 ; 作成した一時ファイルを削除
 deltmp tmpfile
 ; プログラムの終了
