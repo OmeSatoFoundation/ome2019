@@ -1,0 +1,35 @@
+#include "hsp3cl.as"
+	adrs = "127.0.0.1"
+	port = 12222
+	sockmake 0, port
+	if stat : mes "socket error " + stat : goto *failed
+	repeat
+		sockwait 0
+		if stat > 1 : mes "socket error " + stat : goto *failed
+		if stat = 0 : break
+		wait 10
+	loop
+	mes "connected"
+	wait 100
+
+	curr = 1
+	prev = 1
+	led = 0
+
+	repeat
+		curr = gpioin(5)
+		if curr = 0 {
+			if prev = 1 {
+				led = 1 - led
+			}
+		}
+		prev = curr
+		msg = str(led)
+		sockput msg
+		if stat : mes "socket error " + stat : goto *failed
+		mes "sent " + msg
+		wait 10
+	loop
+*failed
+	sockclose 0
+	stop
