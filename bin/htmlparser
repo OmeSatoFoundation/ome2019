@@ -46,11 +46,10 @@ class HTMLParser:
     def htmltagn(self, tag, pos, n):
         result = self.soup.find_all(tag)
         if n == -1:
-            last = -1
+            result = result[pos:]
         else:
-            last = pos + n
-        first = pos
-        for i in result[first:last]:
+            result = result[pos:pos+n]
+        for i in result:
             self.data.append(i)
     def htmluntag(self):
         self.data.append(self.soup.text)
