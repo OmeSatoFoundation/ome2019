@@ -1,6 +1,6 @@
 #include "hsp3cl.as"
 
-	adrs="192.168.1.111"
+	adrs="127.0.0.1"
 	port=12222
 	sockopen 0, adrs, port
 	if stat : mes "socket error "+stat : goto *failed
