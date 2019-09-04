@@ -9,8 +9,6 @@ sdim kousui, 32, 24
 sdim kazamuki, 32, 24
 sdim fusoku, 32, 24
 sdim nisyou, 32, 24
-sdim lf
-poke lf, , 10
 
 creattmp tmpfile
 curl "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30", tmpfile
@@ -19,10 +17,7 @@ noteload tmpfile
 htmltagattr buf, "table", "id:tbl_list", buf
 htmltagn buf, "td", 12, -1, buf
 htmluntag buf, buf
-
-strrep buf, "\n", lf
-strrep buf, "\r", lf
-split buf, lf, result
+splitnl buf, result
 
 i = 0
 repeat 24 
