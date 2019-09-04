@@ -66,5 +66,15 @@
 	cmdexec "htmlparser --command=htmltagn --filename=" + _t + " --tag=" + tag + " --pos=" + str(p) + " --number=" + str(n), v
 	deltmp _t
 	return
+#deffunc htmluntag str html, var v
+	creattmp _t
+	notesel _buf
+	noteadd html
+	notesave _t
+	memset _buf, '', notesize
+	cmdexec "htmlparser --command=htmluntag --filename=" + _t, v
+	deltmp _t
+	return
+
 #global
 #endif

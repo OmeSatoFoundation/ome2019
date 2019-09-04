@@ -35,8 +35,15 @@ class HTMLParser:
             self.data.append(i.get(attr))
     def htmltagn(self, tag, pos, n):
         result = self.soup.find_all(tag)
-        for i in result[pos:pos+n]:
+        if n == -1:
+            last = -1
+        else:
+            last = pos + n
+        first = pos
+        for i in result[first:last]:
             self.data.append(i)
+    def htmluntag(self):
+        self.data.append(self.soup.text)
     def parseattr(self, attr):
         if(len(attr) == 0):
             a = {}
@@ -105,6 +112,8 @@ def main():
         hp.htmlval(tag, attr)
     elif(command == 'htmltagn'):
         hp.htmltagn(tag, pos, number)
+    elif(command == 'htmluntag'):
+        hp.htmluntag()
     return hp.emitdata()
 if __name__ == '__main__':
     sys.exit(main())
