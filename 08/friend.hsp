@@ -2,13 +2,25 @@
 #include "hspcurl.as"
 #include "htmlparser.as"
 
-creattmp tmpfile
+; 友達のIPアドレス
 friend_ip = "127.0.0.1"
+; 友達のポート番号 
 friend_port = 3000
-url = friend_ip + ":" + friend_port
+; URL
+url = friend_ip + ":" + friend_port + "/index.html"
+; 一時ファイルの作成
+creattmp tmpfile
+; URLで指定したデータをダウンロードして一時ファイルに保存
 curl url, tmpfile
+; ダウンロードしたファイルを読み込むバッファ(buf)の指定
 notesel buf
+; ダウンロードしたHTMLファイルを指定したバッファ(buf)に読み込む
 noteload tmpfile
-
-htmltagn buf, "p", 0, 2, buf
+; バッファから一番最初のulタグを1個分探してバッファ(buf)を上書き
+htmltagn buf, "ul", 0, 1, buf
+; 探したulタグを表示
 mes buf
+; 作成した一時ファイルを削除
+deltmp tmpfile
+; プログラムの終了
+stop 
