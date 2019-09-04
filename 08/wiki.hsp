@@ -1,0 +1,12 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+creattmp tmpfile
+word = "Raspberry_Pi"
+url = "https://ja.wikipedia.org/wiki/" + word
+curl url, tmpfile
+notesel buf
+noteload tmpfile
+htmltagn buf, "p", 0, 3, buf
+htmluntag buf, buf
+mes buf
