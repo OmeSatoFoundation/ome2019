@@ -2,6 +2,8 @@
 #include "hspcurl.as"
 #include "htmlparser.as"
 
+; 結果を入れる配列
+sdim result, 64, 64
 ; 検索する英語を指定
 word = "hello"
 ; ダウンロードするウェブページのURLを指定
@@ -19,9 +21,13 @@ noteload tmpfile
 htmltagattr buf, "td", "class:content-explanation", buf
 ; bufから<td>...</td>を探して、タグの間にある文字列をbufに入れる
 htmltext buf, "td", buf
+; "、"で区切ってresult配列に入れる
+split buf, "、", result
 
 ; 結果の出力
-mes buf
+repeat stat
+	mes result(cnt)
+loop
 
 ; 使用した一時ファイルを削除
 deltmp tmpfile
