@@ -1,0 +1,26 @@
+#include "hsp3cl.as"
+#include "cmdexec.as"
+
+mes "Content-type: text/html\n"
+mes "<html><head><meta charset=\"utf-8\"></head><body>"
+
+exec "gpio -g mode 17 out"
+;現在のGPIO 17の値を取得 1 == ON, 0 == OFF
+cmdexec "gpio -g read 17", prev_led
+
+;数値へ変換
+prev_led = int(prev_led)
+mes prev_led
+
+if prev_led = 0{
+	;ついていなかった
+	mes "<p>オフでした。つけます</p>"
+	next_led = 1
+}else{
+	; 
+	mes "<p>オンでした。けします</p>"
+	next_led = 0
+}
+exec "gpio -g write 17 " + next_led
+mes "</body></html>"
+end
