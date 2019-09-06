@@ -238,7 +238,7 @@ def executable(path):
 def main():
     server = BaseHTTPServer.HTTPServer
     handler = HSPCGIHTTPRequestHandler
-    server_address = ("127.0.0.1", 3000)
+    server_address = ("0.0.0.0", 3000)
     handler.cgi_directories = ["/cgi-bin"]
     httpd = server(server_address, handler)
     httpd.serve_forever()
