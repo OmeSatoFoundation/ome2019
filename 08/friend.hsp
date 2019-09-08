@@ -17,8 +17,8 @@ curl url, tmpfile
 notesel buf
 ; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
 noteload tmpfile
-; bufから一番最初のulタグを1個分探して、結果をbufに入れる
-htmltagn buf, "ul", 0, 1, buf
+; bufから一番最初のolタグを1個分探して、結果をbufに入れる
+htmltagn buf, "ol", 0, 1, buf
 ; 結果を出力 
 mes buf
 
