@@ -1,4 +1,4 @@
-j#include "hsp3cl.as"
+#include "hsp3cl.as"
 #include "hspcurl.as"
 #include "htmlparser.as"
 
