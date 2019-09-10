@@ -43,10 +43,10 @@ loop
 ; 結果を出力
 mes "時刻 " + "気温 " + "降水 "  
 repeat 24 
-	mes str(jikan(cnt)) + "  " + str(kion(cnt)) + "   " + str(kousui(cnt))
+	mes jikan(cnt) + "  " + kion(cnt) + "   " + kousui(cnt)
 loop
 
 ; 使用した一時ファイルを削除
 deltmp tmpfile
 ; プログラムの終了
-stop
+end

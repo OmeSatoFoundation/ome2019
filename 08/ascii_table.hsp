@@ -1,0 +1,23 @@
+#include "hsp3cl.as"
+#include "hspcurl.as"
+#include "htmlparser.as"
+
+url = "https://en.wikipedia.org/wiki/ASCII"
+
+sdim ascii, 5, 128
+
+creattmp tmpfile
+curl url, tmpfile
+notesel buf
+noteload tmpfile
+htmltagattr buf, "table", "class:chset", buf
+htmltag buf, "a", buf
+htmluntag buf, buf
+splitnl buf, ascii
+mes "HEX   :  	HEX   : 	HEX   : 	HEX   :"
+i = 0
+repeat 32
+	mes strf("%#04x : %s\t%#04x : %s\t%#04x : %s\t%#04x : %s", i, ascii(i), i+1, ascii(i+1), i+2, ascii(i+2), i+3, ascii(i+3))
+	i = i + 4	  	
+loop
+end

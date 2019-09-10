@@ -1,11 +1,14 @@
 #include "hsp3cl.as"
 #include "hspcurl.as"
+#include "jtalk.as"
 #include "htmlparser.as"
 
+; 結果を入れる配列
+sdim result, 64, 64
 ; 検索する英語を指定
-word = "Raspberry_Pi"
+word = "hello"
 ; ダウンロードするウェブページのURLを指定
-url = "https://ja.wikipedia.org/wiki/" + word
+url = "https://ejje.weblio.jp/content/" + word
 
 ; 一時ファイルを用意
 creattmp tmpfile
@@ -15,13 +18,19 @@ curl url, tmpfile
 notesel buf
 ; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
 noteload tmpfile
-; bufから<p>...</p>を探して、1つ目から3個分を取り出してbufへ入れる
-htmltagn buf, "p", 0, 3, buf
-; buf内の<>をすべて外して, 結果をbufに入れる
-htmluntag buf, buf
+; bufから<td class="content-explanation">...</td>を探して、結果をbufに入れる
+htmltagattr buf, "td", "class:content-explanation", buf
+; bufから<td>...</td>を探して、タグの間にある文字列をbufに入れる
+htmltext buf, "td", buf
+; "、"で区切ってresult配列に入れる
+split buf, "、", result
 
-; 結果を出力
-mes buf
+mes result(cnt)
+
+; 結果を読み上げる
+jtload result(0), 0
+mmplay 0
+
 
 ; 使用した一時ファイルを削除
 deltmp tmpfile

@@ -36,4 +36,4 @@ mes "address " + address
 ; 使用した一時ファイルを削除
 deltmp tmpfile
 ; プログラムの終了
-stop
+end

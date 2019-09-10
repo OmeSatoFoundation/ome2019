@@ -25,4 +25,4 @@ mes buf
 ; 作成した一時ファイルを削除
 deltmp tmpfile
 ; プログラムの終了
-stop 
+end 

@@ -19,5 +19,5 @@ htmltext buf, "title", buf
 ; バッファ変数を表示
 mes buf
 ; プログラム終了
-stop
+end
 

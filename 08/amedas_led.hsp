@@ -53,4 +53,4 @@ if kion(hour) > 28 {
 ; 使用した一時ファイルを削除
 deltmp tmpfile
 ; プログラムの終了
-stop
+end
