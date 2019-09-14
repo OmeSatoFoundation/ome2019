@@ -1,3 +1,5 @@
+#ifndef CMDEXEC_AS
+#define CMDEXEC_AS
 #module
 #deffunc creattmp var _tname
 	_tmpdir = "/tmp/"
@@ -22,3 +24,4 @@
 	exec "rm " + _tname
 	return 
 #global
+#endif
