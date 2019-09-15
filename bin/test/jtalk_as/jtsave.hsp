@@ -1,0 +1,20 @@
+#include "hsp3dish.as"
+#include "jtalk.as"
+
+redraw 0
+mes "発話開始"
+mes "「子どもIT未来塾」"
+redraw 1
+
+jtload "子どもIT未来塾", 0
+mmplay 0
+; ランダムなファイル名で保存
+jtsave filename
+; 
+exist filename
+if strsize = -1 { 
+    mes "jtsave test failed (file is not exsit)"
+} else {
+    mes "jtsave test passed"
+}
+stop
