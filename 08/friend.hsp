@@ -9,20 +9,12 @@ friend_port = 3000
 ; ダウンロードするウェブページのURLを指定
 url = friend_ip + ":" + friend_port + "/index.html"
 
-; 一時ファイルを用意
-creattmp tmpfile
-; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
-curl url, tmpfile
-; ダウンロードした一時ファイルを読み込む変数を指定
-notesel buf
-; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
-noteload tmpfile
+; curlでURLで指定されるファイルをダウンロードしてbufに入れる　
+curl url, buf
 ; bufから一番最初のolタグを1個分探して、結果をbufに入れる
 htmltagn buf, "ol", 0, 1, buf
 ; 結果を出力 
 mes buf
 
-; 作成した一時ファイルを削除
-deltmp tmpfile
 ; プログラムの終了
 end 

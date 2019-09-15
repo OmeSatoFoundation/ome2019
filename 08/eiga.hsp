@@ -7,14 +7,8 @@ sdim result, 32, 128
 ; ダウンロードするウェブページのURLを指定
 url = "https://eiga.com/ranking/"
 
-; 一時ファイルを用意
-creattmp tmpfile
-; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
-curl url, tmpfile
-; ダウンロードした一時ファイルを読み込む変数を指定
-notesel buf
-; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
-noteload tmpfile
+; curlでURLで指定されるファイルをダウンロードしてbufに入れる　
+curl url, buf
 ; bufから<h2 class="title">...</h2>を探して、結果をbufに入れる
 htmltagattr buf, "h2", "class:title", buf
 ; buf内の<>をすべて外して, 結果をbufに入れる
@@ -27,7 +21,5 @@ repeat 5
 	mes str(cnt+1) + "位 " + result(cnt)
 loop
 
-; 使用した一時ファイルを削除
-deltmp tmpfile
 ; プログラムの終了
 end

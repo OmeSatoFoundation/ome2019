@@ -1,7 +1,6 @@
 #include "hsp3cl.as"
 #include "hspcurl.as"
 #include "htmlparser.as"
-
 ; 結果を入れる配列
 sdim result, 32, 24*6
 sdim jikan, 32, 24
@@ -12,15 +11,8 @@ sdim fusoku, 32, 24
 sdim nisyou, 32, 24
 ; ダウンロードするウェブページのURLを指定
 url = "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30"
-
-; 一時ファイルを用意
-creattmp tmpfile
-; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
-curl url, tmpfile
-; ダウンロードした一時ファイルを読み込む変数を指定
-notesel buf
-; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
-noteload tmpfile
+; curlでurlで指定したウェブページをダウンロードしてbufへ入れる
+curl url, buf
 ; bufから, <table id="tbl_list"> ... </table>を探して, 結果をbufに入れる
 htmltagattr buf, "table", "id:tbl_list", buf
 ; bufから<td>...</td>を探して12個目から最後までの結果をbufに入れる
@@ -29,7 +21,6 @@ htmltagn buf, "td", 12, -1, buf
 htmluntag buf, buf
 ; 改行でbufを区切って結果をresult配列へ入れる
 splitnl buf, result
-
 ; 結果を時間順に配列に格納
 repeat 24 
 	jikan(cnt) = result(cnt*6+0)
@@ -39,14 +30,10 @@ repeat 24
 	fusoku(cnt) = result(cnt*6+4)
 	nisyou(cnt) = result(cnt*6+5)
 loop
-
 ; 結果を出力
 mes "時刻 " + "気温 " + "降水 "  
 repeat 24 
 	mes jikan(cnt) + "  " + kion(cnt) + "   " + kousui(cnt)
 loop
-
-; 使用した一時ファイルを削除
-deltmp tmpfile
 ; プログラムの終了
 end

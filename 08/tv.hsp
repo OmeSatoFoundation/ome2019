@@ -2,11 +2,8 @@
 #include "hspcurl.as"
 #include "htmlparser.as"
 
-tmpfile = "/tmp/tv.html"
 word = "ドラえもん"
-curl "https://tv.yahoo.co.jp/search/?q=" + word, tmpfile
-notesel buf
-noteload tmpfile
+curl "https://tv.yahoo.co.jp/search/?q=" + word, buf
 htmltagattr buf, "p", "class:yjLS pb5p", buf
 htmltext buf, "p", buf
 htmltext buf, "a", buf

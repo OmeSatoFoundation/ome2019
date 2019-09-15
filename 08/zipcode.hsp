@@ -12,14 +12,8 @@ code="1980082"	; 郵便番号
 url = "http://zip.cgis.biz/xml/zip.php?zn="+code
 
 
-; 一時ファイルを用意
-creattmp tmpfile
-; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
-curl url, tmpfile
-; ダウンロードした一時ファイルを読み込む変数を指定
-notesel buf
-; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
-noteload tmpfile
+; curlでURLで指定されるファイルをダウンロードしてbufに入れる　
+curl url, buf
 ; bufから<value state="...">...</value>を探してstate="..."の値をstate変数へ入れる
 htmlval buf, "value", "state", state
 ; bufから<value city="...">...</value>を探してcity="..."の値をcity変数へ入れる
@@ -33,7 +27,5 @@ mes "state " + state
 mes "city " + city
 mes "address " + address
 
-; 使用した一時ファイルを削除
-deltmp tmpfile
 ; プログラムの終了
 end

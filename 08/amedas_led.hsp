@@ -1,8 +1,6 @@
 #include "hsp3cl.as"
 #include "hspcurl.as"
 #include "htmlparser.as"
-
-
 ; 結果を入れる配列
 sdim result, 32, 24*6
 ; 整数配列
@@ -11,15 +9,8 @@ ddim kion, 24
 ddim kousui, 24
 ; ダウンロードするウェブページのURLを指定
 url = "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30"
-
-; 一時ファイルを用意
-creattmp tmpfile
-; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
-curl url, tmpfile
-; ダウンロードした一時ファイルを読み込む変数を指定
-notesel buf
-; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
-noteload tmpfile
+; curlでurlで指定したウェブページをダウンロードしてbufへ入れる
+curl url, buf
 ; bufから, <table id="tbl_list"> ... </table>を探して, 結果をbufに入れる
 htmltagattr buf, "table", "id:tbl_list", buf
 ; bufから<td>...</td>を探して12個目から最後までの結果をbufに入れる
@@ -28,16 +19,13 @@ htmltagn buf, "td", 12, -1, buf
 htmluntag buf, buf
 ; 改行でbufを区切って結果をresult配列へ入れる
 splitnl buf, result
-
 ; 結果を時間順に配列に格納
 repeat 24 
 	jikan(cnt) = int(result(cnt*6+0))
 	kion(cnt) = double(result(cnt*6+1))
 	kousui(cnt) = double(result(cnt*6+2))
 loop
-
 hour = gettime(4)
-
 if kion(hour) > 28 {
 	mes "気温が高いです。熱中症に注意しましょう"
 	gpio 17, 1
@@ -45,12 +33,9 @@ if kion(hour) > 28 {
 	gpio 17, 0
 } else {
 	mes "比較的涼しいです。"
-	gpio 22, 1
+	gpio 18, 1
 	await 100
-	gpio 22, 0
+	gpio 18, 0
 }
-
-; 使用した一時ファイルを削除
-deltmp tmpfile
 ; プログラムの終了
 end

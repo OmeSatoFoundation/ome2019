@@ -10,14 +10,8 @@ word = "hello"
 ; ダウンロードするウェブページのURLを指定
 url = "https://ejje.weblio.jp/content/" + word
 
-; 一時ファイルを用意
-creattmp tmpfile
-; curlでURLで指定されるファイルをダウンロードして一時ファイルに保存
-curl url, tmpfile
-; ダウンロードした一時ファイルを読み込む変数を指定
-notesel buf
-; ダウンロードした一時ファイルを指定した変数(buf)に読み込む
-noteload tmpfile
+; curlでURLで指定されるファイルをダウンロードしてbufに入れる
+curl url, buf
 ; bufから<td class="content-explanation">...</td>を探して、結果をbufに入れる
 htmltagattr buf, "td", "class:content-explanation", buf
 ; bufから<td>...</td>を探して、タグの間にある文字列をbufに入れる
@@ -32,7 +26,5 @@ jtload result(0), 0
 mmplay 0
 
 
-; 使用した一時ファイルを削除
-deltmp tmpfile
 ; プログラムの終了
 end
