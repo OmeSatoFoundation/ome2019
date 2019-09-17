@@ -7,23 +7,23 @@ sdim result, 32, 24*6
 ddim jikan, 24
 ddim kion, 24
 ddim kousui, 24
+ddim fusoku, 24
+sdim kazamuki 30, 24
+sdim nisyou, 30, 24
 ; ダウンロードするウェブページのURLを指定
 url = "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30"
 ; curlでurlで指定したウェブページをダウンロードしてbufへ入れる
 curl url, buf
-; bufから, <table id="tbl_list"> ... </table>を探して, 結果をbufに入れる
-htmltagattr buf, "table", "id:tbl_list", buf
-; bufから<td>...</td>を探して12個目から最後までの結果をbufに入れる
-htmltagn buf, "td", 12, -1, buf
-; buf内の<>をすべて外して, 結果をbufに入れる
-htmluntag buf, buf
+;id="tbl_list"のtableタグを取り出して、bufへ入れる
+htmltable buf, "id:tbl_list", buf
 ; 改行でbufを区切って結果をresult配列へ入れる
 splitnl buf, result
 ; 結果を時間順に配列に格納
 repeat 24 
-	jikan(cnt) = int(result(cnt*6+0))
-	kion(cnt) = double(result(cnt*6+1))
-	kousui(cnt) = double(result(cnt*6+2))
+	base = cnt*6+12
+	jikan(cnt) = int(result(base+0))
+	kion(cnt) = double(result(base+1))
+	kousui(cnt) = double(result(base+2))
 loop
 hour = gettime(4)
 if kion(hour) > 28 {
