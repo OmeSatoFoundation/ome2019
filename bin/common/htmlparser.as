@@ -27,6 +27,11 @@
 	cmdexec "htmlparser --command=htmltagattr --filename=" + _t + " --tag=" + tag + " --attr=" + attrs, v
 	deltmp _t
 	return
+#deffunc htmltable str html, str attrs, var v
+	htmltagattr html, "table", attrs, _x
+	htmltag _x, "td", _x
+	htmluntag _x, v
+	return	
 #deffunc htmlsrc str html, str tag, var v
 	creattmp _t
 	notesel _buf
