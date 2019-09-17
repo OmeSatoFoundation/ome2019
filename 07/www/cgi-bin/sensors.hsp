@@ -33,14 +33,15 @@ init_lux i2c_ch_tsl			; 照度センサ tsl2572を初期化する
 	mes "<td>温度</td>" + "<td>" + temp + " [℃]</td>"
     mes "</tr>"
     mes "<tr>"
-	mes "<td>湿度</td>" + hum  + " [%]"
+	mes "<td>湿度</td>" + "<td>" + hum  + " [%]</td>"
     mes "</tr>"
     mes "<tr>"
-	mes "<td>気圧</td>" + press+ " [hPa]"
+	mes "<td>気圧</td>" + "<td>" + press+ " [hPa]</td>"
     mes "</tr>"
     mes "<tr>"
-	mes "<td>照度</td>" + lux  + "<td>[lx]</td>"
+	mes "<td>照度</td>" + "<td>" + lux  + "[lx]</td>"
     mes "</tr>"
+    mes "</table>"
 
     mes "</body></html>"
     end
