@@ -9,6 +9,7 @@ import select
 import copy
 import BaseHTTPServer
 import CGIHTTPServer
+import subprocess
 
 class HSPCGIHTTPRequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
     def run_cgi(self):
@@ -236,7 +237,12 @@ def executable(path):
     except os.error:
         return False
     if(path[-4:] == '.hsp'):
-        os.system('hspcmp -i -u --compath=/home/pi/ome/bin/common/ ' + path)
+        try:
+            subprocess.check_output('hspcmp -i -u --compath=/home/pi/ome/bin/common/ ' + path, shell=True)
+        except subprocess.CalledProcessError as e:
+            print(e.cmd)
+            print(e.output)
+            return False        
         return True
     elif(path[-3:] == '.ax'):
         return True
