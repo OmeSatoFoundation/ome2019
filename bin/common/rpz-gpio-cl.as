@@ -2,6 +2,8 @@
 #ifndef __rpz-gpio__
 #define __rpz-gpio__
 
+#include "cmdexec.as"
+
 
 	;	RPZ-Sensor用の拡張コマンドを定義するファイルです
 	;	#include "rpz-gpio.as"
@@ -469,6 +471,18 @@
 #defcfunc rasp_map int _x, int _in_min, int _in_max, int _out_min, int _out_max
 	_value=(_x - _in_min)*(_out_max - _out_min) / (_in_max - _in_min) + _out_min
 	return _value
+
+; on termination of HSP3CL, used gpio ports from devcontrol instruction are cleared
+; to retain value in gpio ports, these two functions are useful
+; arguments, and return value are the same with gpio, gpioin
+#deffunc cgpio int _p1, int _p2
+    exec "gpio -g mode " + _p1 + " out"
+    exec "gpio -g write " + _p1 + " " + _p2
+    return 
+#defcfunc cgpioin int _p1
+    exec "gpio -g mode " + _p1 + " out"
+    cmdexec "gpio -g read " + _p1, s
+    return int(s)
 
 #global
 
