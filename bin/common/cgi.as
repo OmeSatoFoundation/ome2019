@@ -7,26 +7,24 @@ qsize = 0
     creattmp tmpfile
     exec "echo $QUERY_STRING > " + tmpfile
     cmdexec "decurl.py " + tmpfile, query
-    split query, "&", querystr  
-    qsize = stat
+    querystr = query
     return 
 #deffunc getqueryval str key, var val
-    creattmp tmpfile
-    exec "echo $QUERY_STRING > " + tmpfile
-    cmdexec "decurl.py " + tmpfile, query
-    split query, "&", querystr 
-    qsize = stat
+    sdim keys, 128, 128
+    sdim vals, 128, 128
+    getquerystr querystr
+    split querystr, "&", qstr
     found = 0
-    split querystr, "=", qstr
-    repeat qsize
-        p = instr(qstr(cnt), 0, key)
-        if(p != -1) {
-            found = 1
+    repeat stat
+        split qstr(cnt), "=", keys(cnt), vals(cnt)
+        found = instr(keys(cnt), 0, key)
+        if(found != -1) {
+            found = cnt
             break
-        } 
+        }
     loop
-    if(found) {
-        val = qstr(cnt+1) 
+    if(found >= 0) {
+        val = vals(found)
     } else {
         val = ""
     }

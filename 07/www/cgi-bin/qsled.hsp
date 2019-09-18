@@ -1,0 +1,17 @@
+#include "hsp3cl.as"
+#include "rpz-gpio-cl.as"
+#include "cgi.as"
+mes "Content-type: text/html\n"
+mes "<html><head><meta charset=\"utf-8\"></head><body>"
+getqueryval "led", led_port
+getqueryval "val", led_val
+led_port = int(led_port)
+led_val = int(led_val)
+if(led_val = 1) {
+    mes "<p>GPIO" + led_port + "を点灯します</p>"
+} else {
+    mes "<p>GPIO" + led_port + "を消灯します</p>"
+}
+cgpio led_port, led_val
+mes "</body></html>"
+end
