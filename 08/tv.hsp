@@ -2,10 +2,24 @@
 #include "hspcurl.as"
 #include "htmlparser.as"
 
+sdim result, 128, 24
+
+;検索する単語 
 word = "ドラえもん"
-curl "https://tv.yahoo.co.jp/search/?q=" + word, buf
+;番組表ウェブページのURL
+url = "https://tv.yahoo.co.jp/search/?q=" + word
+;ウェブページ（HTML）をダウンロードして、buf変数へ入れる
+curl url, buf
+; buf変数に入っているHTMLから、<p class="yjLS pb5p">...</p>を探して結果をbuf変数へ上書き
 htmltagattr buf, "p", "class:yjLS pb5p", buf
+; buf変数に入っているHTMlから、<p>...</p>を探し、タグの間にあるテキストだけにする(pタグを取り除く)
 htmltext buf, "p", buf
+; buf変数に入っているHTMlから、<a>...</a>を探し、タグの間にあるテキストだけにする(aタグを取り除く)
 htmltext buf, "a", buf
-mes buf
+;改行でbufの中身を区切って結果をresult配列へいれる
+splitnl buf, result
+; 結果を出力
+repeat stat
+    mes result(cnt)
+loop
 end
