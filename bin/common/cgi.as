@@ -10,7 +10,12 @@ qsize = 0
     split query, "&", querystr  
     qsize = stat
     return 
-#deffunc getqueryval var querystr, str key, var val
+#deffunc getqueryval str key, var val
+    creattmp tmpfile
+    exec "echo $QUERY_STRING > " + tmpfile
+    cmdexec "decurl.py " + tmpfile, query
+    split query, "&", querystr 
+    qsize = stat
     found = 0
     split querystr, "=", qstr
     repeat qsize

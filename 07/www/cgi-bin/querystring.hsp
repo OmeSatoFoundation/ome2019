@@ -2,8 +2,7 @@
 #include "cgi.as"
 mes "Content-type: text/html\n"
 mes "<html><head><meta charset=\"utf-8\"></head><body>"
-getquerystr query
-getqueryval query, "hello", q
+getqueryval "hello", q
 mes q
 mes "</body></html>"
 end
