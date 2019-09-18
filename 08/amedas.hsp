@@ -11,9 +11,10 @@ sdim fusoku, 32, 24
 sdim nisyou, 32, 24
 ; ダウンロードするウェブページのURLを指定
 url = "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30"
-; curlでurlで指定したウェブページをダウンロードしてbufへ入れる
+; curlでurlで指定したウェブページ(HTML)をダウンロードしてbufへ入れる
 curl url, buf
-;id="tbl_list"のtableタグを取り出して、bufへ入れる
+; buf変数に入っているHTMLから、<table id="tbl_list">...</table>を探して
+; tableタグの中の<td>...</td>タグの間の文字列でbuf変数を上書き
 htmltable buf, "id:tbl_list", buf
 ; mes buf
 ; 改行でbufを区切って結果をresult配列へ入れる
@@ -21,6 +22,7 @@ splitnl buf, result
 ; 結果を時間順に配列に格納
 repeat 24 
 	base = cnt*6+12
+	; 配列は0から始まる
 	jikan(cnt) = result(base+0)
 	kion(cnt) = result(base+1)
 	kousui(cnt) = result(base+2)
