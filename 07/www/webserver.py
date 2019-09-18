@@ -58,7 +58,7 @@ class HSPCGIHTTPRequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
                 self.send_error(403, "CGI script is not a Python script (%r)" %
                                 scriptname)
                 return
-            if not self.is_executable(scriptfile):
+            if not executable(scriptfile):
                 self.send_error(403, "CGI script is not executable (%r)" %
                                 scriptname)
                 return
@@ -160,6 +160,8 @@ class HSPCGIHTTPRequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
                 os.dup2(self.wfile.fileno(), 1)
                 if(scriptfile[-3:] == '.ax'):
                     os.execve('/home/pi/ome/bin/hsp3cl', ['hsp3cl', scriptfile], env)
+                elif(scriptfile[-4:] == '.hsp'):
+                    os.execve('/home/pi/ome/bin/hsp3cl', ['hsp3cl', scriptfile[:-4] + '.ax'], env)
                 else:
                     os.execve(scriptfile, args, env)
             except:
@@ -233,7 +235,13 @@ def executable(path):
         st = os.stat(path)
     except os.error:
         return False
-    return st.st_mode & 0111 != 0
+    if(path[-4:] == '.hsp'):
+        os.system('hspcmp -i -u --compath=/home/pi/ome/bin/common/ ' + path)
+        return True
+    elif(path[-3:] == '.ax'):
+        return True
+    else:
+        return st.st_mode & 0111 != 0
 
 def main():
     server = BaseHTTPServer.HTTPServer
