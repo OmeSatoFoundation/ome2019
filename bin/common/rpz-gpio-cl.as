@@ -215,7 +215,7 @@
 	if stat: return 3
 
 	; read status
-	; wait for measuring is 0
+	; await for measuring is 0
 	devcontrol "i2cwrite", 0xF3, 1, i2cch
 	if stat : return 4
 	devcontrol "i2cread", i2cch
@@ -312,10 +312,10 @@
 	if stat : return 1
 	devcontrol "i2cwrite",0x0180,2	; 電源OFF
 	if stat : return 1
-	wait 40
+	await 40
 	devcontrol "i2cwrite",0x0380,2	; 電源ON
 	if stat : return 1
-	wait 40
+	await 40
 	return 0
 
 #deffunc geti2c_lux
@@ -331,7 +331,7 @@
 #deffunc init_lux int _ch
 	devcontrol "i2copen",0x39,_ch	; TSL2572を初期化
 	if stat : return 1
-	wait 40
+	await 40
 	return
 	
 #defcfunc max var _p1, var _p2
@@ -366,7 +366,7 @@
 	set _again, _atime, _ch
 	devcontrol "i2cwrite",0x0380,2, _ch
 	if stat : return 1
-	wait 40
+	await 40
 	repeat
 		devcontrol "i2cwrite",0x93, 1, _ch
 		devcontrol "i2cread", _ch
@@ -375,7 +375,7 @@
 			devcontrol "i2cwrite",0x0180,2,_ch
 			break
 			}
-		else : wait 100
+		else : await 100
 	loop
 	devcontrol "i2cwrite",0x14|0xA0,1, _ch
 	devcontrol "i2creadw", _ch	
