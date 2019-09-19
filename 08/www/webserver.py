@@ -10,6 +10,7 @@ import copy
 import BaseHTTPServer
 import CGIHTTPServer
 import subprocess
+from SocketServer import ThreadingMixIn
 
 class HSPCGIHTTPRequestHandler(CGIHTTPServer.CGIHTTPRequestHandler):
     def run_cgi(self):
@@ -249,8 +250,11 @@ def executable(path):
     else:
         return st.st_mode & 0111 != 0
 
+class ThreadedHTTPServer(ThreadingMixIn, BaseHTTPServer.HTTPServer):
+    pass
+
 def main():
-    server = BaseHTTPServer.HTTPServer
+    server = ThreadedHTTPServer
     handler = HSPCGIHTTPRequestHandler
     server_address = ("0.0.0.0", 3000)
     handler.cgi_directories = ["/cgi-bin"]
