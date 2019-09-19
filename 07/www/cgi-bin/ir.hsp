@@ -6,7 +6,6 @@ mes "Content-type: text/html\n"
 mes "<html><head><meta charset=\"utf-8\"></head><body>"
 
 getqueryval "command", cmd
-mes cmd
 if cmd = "power" {
 	mes "<p>ファンの電源おします。</p>"
 	exec "irsend SEND_ONCE fan onoff"
