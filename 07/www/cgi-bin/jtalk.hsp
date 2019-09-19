@@ -9,6 +9,6 @@ getqueryval "sentence", sentence
 jtsave sentence, wav_file
 mes "<p>" + sentence + "</p>"
 
-mes "<audio src=\"" + ".." + wav_file + "\" type=\"audio/wav\" controls autoplay>"
+mes "<audio src=\"" + wav_file + "\" type=\"audio/wav\" controls autoplay>"
 mes "</body></html>"
 end

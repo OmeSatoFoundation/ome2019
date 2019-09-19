@@ -24,6 +24,8 @@
     }else{
       exec "jtalk_synth.sh -o \"" + output_path + "\" -w \"" + sentence + "\" -m \"" + voice_name + "\""
     }
-    file = output_path
+    ; ../tmp/tmp.??????
+    ; CGI用
+    file = "../" + output_path
     return 
 #global
