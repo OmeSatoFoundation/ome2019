@@ -1,21 +1,17 @@
 #include "hsp3cl.as"
-#include "hspcurl.as"
-#include "htmlparser.as"
+#include "cmdexec.as"
 
+sdim text, 2048, 32
 ; 検索する英語を指定
 word = "Raspberry_Pi"
-; ダウンロードするウェブページのURLを指定
-url = "https://ja.wikipedia.org/wiki/" + word
+cmd = "wikipedia.py " + word
+cmdexec cmd, result
+split result, ",", text
+text_count = stat - 1
+repeat 3
+    mes text(cnt)
+loop
 
-; curlでURLで指定されるファイルをダウンロードしてbufに入れる
-curl url, buf
-; bufから<p>...</p>を探して、1つ目から3個分を取り出してbufへ入れる
-htmltagn buf, "p", 0, 3, buf
-; buf内の<>をすべて外して, 結果をbufに入れる
-htmluntag buf, buf
-
-; 結果を出力
-mes buf
 
 ; プログラムの終了
 end
