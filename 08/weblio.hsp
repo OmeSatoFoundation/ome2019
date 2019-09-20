@@ -2,26 +2,17 @@
 #include "hspcurl.as"
 #include "htmlparser.as"
 
-; 結果を入れる配列
-sdim result, 64, 64
 ; 検索する英語を指定
 word = "hello"
-; ダウンロードするウェブページのURLを指定
-url = "https://ejje.weblio.jp/content/" + word
+cmd = "weblio.py " + word
+; Weblioのサイトから英語単語の意味を検索して、result変数へいれる
+; 意味1,意味2 ..のようにカンマ(,)で意味が区切られている
+; 意味の個数は検索する英語によって違う
+cmdexec cmd, result
+; カンマ(,)で結果を分解してmeaning1(意味)変数へいれる
+split result, ",", meaning1
 
-; curlでURLで指定されるファイルをダウンロードしてbufへいれる
-curl url, buf
-; bufから<td class="content-explanation">...</td>を探して、結果をbufに入れる
-htmltagattr buf, "td", "class:content-explanation", buf
-; bufから<td>...</td>を探して、タグの間にある文字列をbufに入れる
-htmltext buf, "td", buf
-; "、"で区切ってresult配列に入れる
-split buf, "、", result
-
-; 結果の出力
-repeat stat
-	mes result(cnt)
-loop
+mes meaning1
 
 ; プログラムの終了
 end
