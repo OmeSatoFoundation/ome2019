@@ -1,6 +1,6 @@
 #include "hsp3cl.as"
-#include "hspcurl.as"
-#include "htmlparser.as"
+#include "cmdexec.as"
+
 
 ;	郵便番号から住所を表示する
 ;	http://zip.cgis.biz/
@@ -8,18 +8,9 @@
 
 ; 検索する郵便番号を指定
 code="1980082"	; 郵便番号
-; ダウンロードするウェブページのURLを指定
-url = "http://zip.cgis.biz/xml/zip.php?zn="+code
-
-
-; curlでURLで指定されるファイルをダウンロードしてbufに入れる　
-curl url, buf
-; bufから<value state="...">...</value>を探してstate="..."の値をstate変数へ入れる
-htmlval buf, "value", "state", state
-; bufから<value city="...">...</value>を探してcity="..."の値をcity変数へ入れる
-htmlval buf, "value", "city", city
-; bufから<value address="...">...</value>を探してaddress="..."の値をaddress変数へ入れる
-htmlval buf, "value", "address", address
+cmd = "zipcode.py " + code
+cmdexec cmd, result
+split result, ",", state, city, address
 
 ; 結果を出力
 mes "郵便番号" + code
