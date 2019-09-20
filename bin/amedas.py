@@ -3,9 +3,10 @@
 from __future__ import print_function
 import sys
 import urllib2
+import getopt
 from bs4 import BeautifulSoup
 
-all_args = {'tag': {'arg': ['', '--print-headers'], 'description': 'ヘッダーの表示'},
+all_args = {'print-headers': {'arg': ['', '--print-headers'], 'description': 'ヘッダーの表示'},
             'help': {'arg': ['-h', '--help'], 'description':'ヘルプを表示する'}}
 def usage():
     global all_args
@@ -15,6 +16,19 @@ def usage():
     sys.exit()
 def main():
     print_with_headers = False 
+
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], 'h', ['print-headers', 'help'])
+    except getopt.GetoptError as e:
+        print(e)
+        usage()
+    for o, a in opts:
+        if o in all_args['print-headers']['arg']:
+            print_with_headers = True
+        if o in all_args['help']['arg']:
+            usage()
+
+
     html = urllib2.urlopen('http://tenki.jp/amedas/3/16/44056.html').read()
     soup = BeautifulSoup(html, 'html.parser')
     table = soup.find_all('table', attrs={'class' : 'common-list-entries amedas-table-entries'})[0] 
@@ -24,9 +38,6 @@ def main():
         result.append(i.text.strip())
     headers = [i for i in result[0].splitlines()]
     data    = [i for i in result[1].splitlines()]
-    if(len(sys.argv) > 1):
-        if('--print-headers' in sys.argv):
-            print_with_headers = True
     if print_with_headers:
         print('青梅市のアメダスの記録(10分観測値)')
         for h, d in zip(headers, data):
@@ -36,7 +47,8 @@ def main():
         i = 0
         for d in data:
             if i == 0:
-               d = d.split(' ')[1] #extract time (format for this feild is 'date time')
+               #d = d.split(' ')[1] #extract time (format for this feild is 'date time')
+               pass
             i += 1
             print(d.encode('utf-8'), end=',')
     return 0
