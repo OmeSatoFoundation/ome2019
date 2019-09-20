@@ -1,5 +1,5 @@
 #include "hsp3cl.as"
-#include "hspcurl.as"
+#include "cmdexec.as"
 #include "htmlparser.as"
 
 ;	駅データ(山手線)を表示する
@@ -11,22 +11,15 @@
 ;
 
 ; 結果を入れる配列
-sdim result, 32, 32
+sdim station, 32, 32
 ; 検索する路線コードを指定
 code=11302	
-; ダウンロードするウェブページのURLを指定
-url = "http://www.ekidata.jp/api/l/"+code+".xml"
-
-; curlでURLで指定されるファイルをダウンロードしてbufに入れる
-curl url, buf
-; bufから<station_name>...</station_name>を探して、タグの間にある文字列をbufに入れる
-htmltext buf, "station_name", buf
-; 改行でbufを区切って結果をresult配列へ入れる
-splitnl buf, result
-
-; 結果の出力
-repeat stat
-	mes result(cnt)
+cmd = "eki.py " + code
+cmdexec cmd, result
+split result, ",", station
+station_count = stat - 1
+repeat station_count
+	mes station(cnt)
 loop
 
 ; プログラムの終了
