@@ -27,7 +27,6 @@ def main():
     if(len(sys.argv) > 1):
         if('--print-headers' in sys.argv):
             print_with_headers = True
-            space = 0
     if print_with_headers:
         print('青梅市のアメダスの記録(10分観測値)')
         for h, d in zip(headers, data):
