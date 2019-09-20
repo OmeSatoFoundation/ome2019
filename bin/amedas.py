@@ -5,7 +5,7 @@ import sys
 import urllib2
 from bs4 import BeautifulSoup
 
-all_args = {'tag': {'arg': ['', '--hsp'], 'description': 'hspから使うようにヘッダーの非表示'},
+all_args = {'tag': {'arg': ['', '--print-headers'], 'description': 'ヘッダーの表示'},
             'help': {'arg': ['-h', '--help'], 'description':'ヘルプを表示する'}}
 def usage():
     global all_args
@@ -14,7 +14,7 @@ def usage():
         print("{} {}: {}".format(v['arg'][0], v['arg'][1], v['description']))
     sys.exit()
 def main():
-    print_with_headers = True # False on --hsp option
+    print_with_headers = False 
     html = urllib2.urlopen('http://tenki.jp/amedas/3/16/44056.html').read()
     soup = BeautifulSoup(html, 'html.parser')
     table = soup.find_all('table', attrs={'class' : 'common-list-entries amedas-table-entries'})[0] 
@@ -25,8 +25,8 @@ def main():
     headers = [i for i in result[0].splitlines()]
     data    = [i for i in result[1].splitlines()]
     if(len(sys.argv) > 1):
-        if(sys.argv[1] == '--hsp'):
-            print_with_headers = False
+        if('--print-headers' in sys.argv):
+            print_with_headers = True
             space = 0
     if print_with_headers:
         print('青梅市のアメダスの記録(10分観測値)')
