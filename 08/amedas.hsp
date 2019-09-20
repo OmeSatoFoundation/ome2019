@@ -1,39 +1,11 @@
 #include "hsp3cl.as"
-#include "hspcurl.as"
-#include "htmlparser.as"
-; 結果を入れる配列
-sdim result, 32, 24*6
-sdim jikan, 32, 24
-sdim kion, 32, 24
-sdim kousui, 32, 24
-sdim kazamuki, 32, 24
-sdim fusoku, 32, 24
-sdim nisyou, 32, 24
-; ダウンロードするウェブページのURLを指定
-url = "http://www.jma.go.jp/jp/amedas_h/today-44056.html?areaCode=000&groupCode=30"
-; curlでurlで指定したウェブページ(HTML)をダウンロードしてbufへ入れる
-curl url, buf
-; buf変数に入っているHTMLから、<table id="tbl_list">...</table>を探して
-; tableタグの中の<td>...</td>タグの間の文字列でbuf変数を上書き
-htmltable buf, "id:tbl_list", buf
-; mes buf
-; 改行でbufを区切って結果をresult配列へ入れる
-splitnl buf, result
-; 結果を時間順に配列に格納
-repeat 24 
-	base = cnt*6+12
-	; 配列は0から始まる
-	jikan(cnt) = result(base+0)
-	kion(cnt) = result(base+1)
-	kousui(cnt) = result(base+2)
-	kazamuki(cnt) = result(base+3)
-	fusoku(cnt) = result(base+4)
-	nisyou(cnt) = result(base+5)
-loop
+#include "cmdexec.as"
+
+cmdexec "amedas.py --hsp", result
+split result, ",", jikan, kion, kousui, kazamuki, fusoku, nisyou, sekisetsu
+
 ; 結果を出力
 mes "時刻 " + "気温 " + "降水 "  
-repeat 24 
-	mes jikan(cnt) + "  " + kion(cnt) + "   " + kousui(cnt)
-loop
+mes jikan + "  " + kion + "   " + kousui
 ; プログラムの終了
 end
