@@ -9,16 +9,16 @@ friend_port = 3000
 ;ダウンロードするウェブページのURL
 url = friend_ip + ":" + friend_port + "/index.html"
 
-; urlで指定したウェブサイトのHTMLを取得してbuf変数へいれる
-curl url, buf
-; buf変数内のtitleタグを探してbufを上書き
-htmltag buf, "title", buf
+; urlで指定したウェブサイトのHTMLを取得してhtml変数へいれる
+curl url, html
+; html変数内のtitleタグを探してtitle_tag変数へいれる
+htmltag html, "title", title_tag
+; title_tag変数を表示
+mes title_tag
+; タグ(<title>,</title>)を取り除いてテキストのみにしてtitle_text変数に入れる
+htmluntag title_tag, title_text
 ; buf変数を表示
-mes buf
-; タグ(<title>,</title>)を取り除いてテキストのみにしてbufを上書き
-htmluntag buf, buf
-; buf変数を表示
-mes buf
+mes title_text
 ; プログラム終了
 end
 
