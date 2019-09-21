@@ -9,7 +9,7 @@ friend_port = 3000
 ;ダウンロードするウェブページのURL
 url = friend_ip + ":" + friend_port + "/index.html"
 
-; urlで指定したウェブサイトのHTMLを取得してhtml変数へいれる
+; urlで指定したウェブページのHTMLを取得してhtml変数へいれる
 curl url, html
 ; html変数内のtitleタグを探してtag変数へいれる
 htmltag html, "title", tag
