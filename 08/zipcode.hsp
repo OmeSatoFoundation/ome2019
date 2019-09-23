@@ -13,10 +13,10 @@ cmdexec cmd, result
 split result, ",", state, city, address
 
 ; 結果を出力
-mes "郵便番号" + code
-mes "state " + state
-mes "city " + city
-mes "address " + address
+mes "郵便番号 " + code
+mes "都道府県 " + state
+mes "市町村 " + city
+mes "町 " + address
 
 ; プログラムの終了
 end
