@@ -1,0 +1,18 @@
+#include "hsp3cl.as"
+#include "cmdexec.as"
+#include "htmlparser.as"
+
+;検索する単語 
+word = "サザエさん"
+cmd = "tv.py " + word
+; 検索した単語にあった番組の情報から1つ分取得して、result変数へいれる
+; 日付,時間,番組名,テレビ局 の順番でresult変数に情報をいれる
+cmdexec cmd, result
+; カンマ（,)で文字列を分解してそれぞれ、変数へ入れる。
+split result, ",", date, time, program, station
+
+; 日付、番組名をいれる
+mes date
+mes program
+
+end

@@ -1,0 +1,26 @@
+#include "hsp3cl.as"
+#include "cmdexec.as"
+#include "htmlparser.as"
+
+;	駅データ(山手線)を表示する
+;	駅データ.jp の路線APIを呼び出して使用
+;	http://www.ekidata.jp/doc/line.php
+;
+;	路線コードを調べる
+;	http://ekidata999.blog.fc2.com/blog-category-21.html
+;
+
+; 結果を入れる配列
+sdim station, 32, 32
+; 検索する路線コードを指定
+code=11302	
+cmd = "eki.py " + code
+cmdexec cmd, result
+split result, ",", station
+station_count = stat - 1
+repeat station_count
+	mes station(cnt)
+loop
+
+; プログラムの終了
+end

@@ -1,12 +1,17 @@
 ;	curl and easy xml parse module
 #ifndef __hspcurl__
 #define __hspcurl__
+#include "cmdexec.as"
 #module
 
-#deffunc curl str _p1, str _p2
+#deffunc curl str _p1, var _p2
 	;	curl呼び出し
-	;	curl "URL", "出力ファイル名"
-	exec "curl \""+_p1+"\" -o "+_p2
+	;	curl "URL", "buffer name"
+    creattmp tmpfile
+	exec "curl \""+_p1+"\" -o "+tmpfile
+    notesel _p2
+    noteload tmpfile
+    deltmp tmpfile
 	return 0
 
 #deffunc xmltag str _p1, str _p2, int _p3
