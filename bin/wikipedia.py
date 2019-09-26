@@ -10,8 +10,12 @@ def main():
     argv = sys.argv
     if argc != 2:
         sys.exit(1)
-    url = "https://ja.wikipedia.org/wiki/" + sys.argv[1].encode('utf-8')
-    html = urllib2.urlopen(url).read()
+    url = "https://ja.wikipedia.org/wiki/" + sys.argv[1]
+    try:
+        html = urllib2.urlopen(url).read()
+    except urllib2.HTTPError as e:
+        print(e)
+        sys.exit(1)
     soup = BeautifulSoup(html, 'html.parser')
     ps = soup.find_all('p')
     for p in ps:
