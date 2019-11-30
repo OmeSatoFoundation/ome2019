@@ -449,14 +449,6 @@
 
 	return ch0
 
-#deffunc getspi var _v1, int _p1, str _f1
-	exec "/home/pi/ome/bin/spi "+_p1+" > "+_f1
-	notesel msg
-	noteload _f1
-	getnotestr res,"data : "
-	_v1=0.0+res
-	return 0
-
 #deffunc oled str _s1
 	;gpmes _s1
 	;update 1
