@@ -2,41 +2,12 @@
 #ifndef __rpz-gpio__
 #define __rpz-gpio__
 
-#include "hsp3dish.as"
-
 	;	RPZ-Sensor用の拡張コマンドを定義するファイルです
 	;	#include "rpz-gpio.as"
 	;	を先頭に入れて使用してください
 	;
 
 #module
-
-#deffunc gpmes str _p1
-
-	;	gpmes "メッセージ"
-	;	(簡易画面表示用)メッセージ更新
-	;	update命令で画面更新する際のメッセージを設定します
-	;
-	_umsg=_p1
-	return
-
-#deffunc update int _p1
-
-	;	update フレーム数
-	;	(簡易画面表示用)フレーム更新
-	;	フレーム数の値だけ、画面のフレーム更新を行います
-	;	その際にgpmesで設定した文字列を表示します
-	;
-	fr=_p1
-	if fr<=0 : fr=1
-	repeat fr
-	redraw 0
-	pos 20,20
-	mes _umsg
-	redraw 1
-	await 66
-	loop
-	return
 
 #deffunc getnotestr var _p1, str _p2
 
@@ -333,7 +304,7 @@
 #deffunc geti2c_lux_init
 
 	;	geti2c_lux_init
-	;	rpz-sensorボードの照度センサーを初期化します
+	;	rpz-sensorボードの照度センサーTSL2561を初期化します
 	;	(最初の1回だけ実行してください、以降はgeti2c_luxで更新できます)
 	;
 	devcontrol "i2copen",0x39	; TSL2572を初期化
@@ -357,7 +328,7 @@
 	return
 
 #deffunc init_lux int _ch
-	devcontrol "i2copen",0x39,_ch	; TSL2572を初期化
+	devcontrol "i2copen",0x39,_ch	; TSL2561を初期化
 	if stat : return 1
 	wait 40
 	return
@@ -431,7 +402,7 @@
 	lux2 = (0.63*double(_ch0) - double(_ch1)) / cpl
 	return max(lux1, lux2)
 	
-#defcfunc cget_lux int ch
+#defcfunc get_lux int ch
 	again = 1
 	atime = 0xB6
 	
@@ -467,7 +438,7 @@
 
 	return lux
 
-#defcfunc get_lux int ch
+#defcfunc get_lux_fixed int ch
 	again = 2
 	atime = 0xB6
 
@@ -478,21 +449,10 @@
 
 	return ch0
 
-#deffunc getspi var _v1, int _p1, str _f1
-	exec "/home/pi/ome/bin/spi "+_p1+" > "+_f1
-	notesel msg
-	noteload _f1
-	getnotestr res,"data : "
-	_v1=0.0+res
-	return 0
-
-#deffunc led int _p1, int _v1
-	exec "/home/pi/ome/bin/led "+_p1+" "+_v1
-	return 0
-
 #deffunc oled str _s1
 	;gpmes _s1
-	update 1
+	;update 1
+	wait 1
 	exec "/home/pi/ome/bin/./oled \""+_s1+"\""
 	;gpmes "./oled \""+_s1+"\""
 	return 0
