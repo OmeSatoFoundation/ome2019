@@ -459,7 +459,8 @@
 
 #deffunc oled str _s1
 	;gpmes _s1
-	update 1
+	;update 1
+	wait 1
 	exec "/home/pi/ome/bin/./oled \""+_s1+"\""
 	;gpmes "./oled \""+_s1+"\""
 	return 0
