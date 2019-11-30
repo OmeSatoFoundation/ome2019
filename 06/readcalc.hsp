@@ -10,7 +10,7 @@ mes "" + a + " + " + b
 redraw 1
 
 ; 問題読み上げ
-jtload "" + a + "たす" + 2, 0
+jtload "" + a + "たす" + b, 0
 mmplay 0
 wait 100
 
