@@ -1,5 +1,5 @@
 #include "hsp3dish.as"
-##include "rpz-gpio.as"
+#include "rpz-gpio.as"
 
 	redraw 0
 	mes "Reset..."
