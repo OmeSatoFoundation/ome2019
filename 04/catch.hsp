@@ -1,3 +1,4 @@
+#include "hsp3dish.as"
 #include "rpz-gpio.as"
 
 	redraw 0
