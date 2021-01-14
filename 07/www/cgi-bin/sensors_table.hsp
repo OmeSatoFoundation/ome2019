@@ -1,4 +1,4 @@
-#include "rpz-gpio.as"
+#include "rpz-gpio-cl.as"
 #include "hsp3cl.as"
 
 mes "Content-type: text/html\n"
