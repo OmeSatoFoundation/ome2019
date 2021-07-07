@@ -69,13 +69,28 @@
 	static_cal_dig_H5 = 0
 	static_cal_dig_H6 = 0
 	; TODO: slave address (0x77) should be variable.
-	devcontrol "i2copen", 0x77, i2cch
-	if stat : return 1
+	; 0x76: external BME280
+	; 0x77: onboard BME280
+	devcontrol "i2copen", 0x76, i2cch
+	if stat {
+		devcontrol "i2copen", 0x77, i2cch
+		if stat: return 1
+		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。"
+		notesel buf
+		notesave "/dev/stdout"
+	}
 
 	; *** get calibration data ***
 	; dig_T1
 	devcontrol "i2cwrite", 0x88, 1, i2cch
-	if stat: return 2
+	if stat {
+		devcontrol "i2copen", 0x77, i2cch
+		if stat: return 2
+		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。\n"
+		notesel buf
+		notesave "/dev/stdout"
+		devcontrol "i2cwrite", 0x88, 1, i2cch
+	}
 	devcontrol "i2creadw", i2cch
 	static_cal_dig_T1 = stat
 
