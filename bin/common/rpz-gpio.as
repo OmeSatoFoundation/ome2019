@@ -86,7 +86,7 @@
 	if stat {
 		devcontrol "i2copen", 0x77, i2cch
 		if stat: return 2
-		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。"
+		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。\n"
 		notesel buf
 		notesave "/dev/stdout"
 		devcontrol "i2cwrite", 0x88, 1, i2cch
