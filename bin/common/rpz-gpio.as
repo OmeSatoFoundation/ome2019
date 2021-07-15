@@ -49,7 +49,8 @@
 	rpz_lux@=0.0+res
 	return 0
 
-#defcfunc init_bme int i2cch
+#deffunc init_bme 
+  i2cch_bme = 0
 	static_cal_dig_T1 = 0
 	static_cal_dig_T2 = 0
 	static_cal_dig_T3 = 0
@@ -71,10 +72,10 @@
 	; TODO: slave address (0x77) should be variable.
 	; 0x76: external BME280
 	; 0x77: onboard BME280
-	devcontrol "i2copen", 0x76, i2cch
+	devcontrol "i2copen", 0x76, i2cch_bme
 	if stat {
-		devcontrol "i2copen", 0x77, i2cch
-		if stat: return 1
+		devcontrol "i2copen", 0x77, i2cch_bme
+		if stat {bme_stat@=1: return}
 		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。"
 		notesel buf
 		notesave "/dev/stdout"
@@ -82,129 +83,131 @@
 
 	; *** get calibration data ***
 	; dig_T1
-	devcontrol "i2cwrite", 0x88, 1, i2cch
+	devcontrol "i2cwrite", 0x88, 1, i2cch_bme
 	if stat {
-		devcontrol "i2copen", 0x77, i2cch
-		if stat: return 2
+		devcontrol "i2copen", 0x77, i2cch_bme
+		if stat {bme_stat@=2: return}
 		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。\n"
 		notesel buf
 		notesave "/dev/stdout"
-		devcontrol "i2cwrite", 0x88, 1, i2cch
+		devcontrol "i2cwrite", 0x88, 1, i2cch_bme
 	}
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_T1 = stat
 
 	; dig_T2
-	devcontrol "i2cwrite", 0x8A, 1, i2cch
-	if stat: return 3
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x8A, 1, i2cch_bme
+	if stat {bme_stat@=3: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_T2 = get_signed16(stat)
 
 	; dig_T3
-	devcontrol "i2cwrite", 0x8C, 1, i2cch
-	if stat: return 4
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x8C, 1, i2cch_bme
+	if stat {bme_stat@=4: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_T3 = get_signed16(stat)
 
 	; dig_P1
-	devcontrol "i2cwrite", 0x8E, 1, i2cch
-	if stat: return 5
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x8E, 1, i2cch_bme
+	if stat {bme_stat@=5: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P1 = stat
 
 	; dig_P2
-	devcontrol "i2cwrite", 0x90, 1, i2cch
-	if stat: return 6
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x90, 1, i2cch_bme
+	if stat {bme_stat@=6: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P2 = get_signed16(stat)
 
 	; dig_P3
-	devcontrol "i2cwrite", 0x92, 1, i2cch
-	if stat: return 7
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x92, 1, i2cch_bme
+	if stat {bme_stat@=7: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P3 = get_signed16(stat)
 
 	; dig_P4
-	devcontrol "i2cwrite", 0x94, 1, i2cch
-	if stat: return 8
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x94, 1, i2cch_bme
+	if stat {bme_stat@=8: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P4 = get_signed16(stat)
 
 	; dig_P5
-	devcontrol "i2cwrite", 0x96, 1, i2cch
-	if stat: return 9
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x96, 1, i2cch_bme
+	if stat {bme_stat@=9: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P5 = get_signed16(stat)
 
 	; dig_P6
-	devcontrol "i2cwrite", 0x98, 1, i2cch
-	if stat: return 10
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x98, 1, i2cch_bme
+	if stat {bme_stat@=10: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P6 = get_signed16(stat)
 
 	; dig_P7
-	devcontrol "i2cwrite", 0x9A, 1, i2cch
-	if stat: return 11
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x9A, 1, i2cch_bme
+	if stat {bme_stat@=11: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P7 = get_signed16(stat)
 
 	; dig_P8
-	devcontrol "i2cwrite", 0x9C, 1, i2cch
-	if stat: return 12
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x9C, 1, i2cch_bme
+	if stat {bme_stat@=12: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P8 = get_signed16(stat)
 
 	; dig_P9
-	devcontrol "i2cwrite", 0x9E, 1, i2cch
-	if stat: return 13
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0x9E, 1, i2cch_bme
+	if stat {bme_stat@=13: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_P9 = get_signed16(stat)
 
 	; dig_H1
-	devcontrol "i2cwrite", 0xA1, 1, i2cch
-	if stat: return 14
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cwrite", 0xA1, 1, i2cch_bme
+	if stat {bme_stat@=14: return}
+	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H1 = stat
 
 	; dig_H2
-	devcontrol "i2cwrite", 0xE1, 1, i2cch
-	if stat: return 15
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2cwrite", 0xE1, 1, i2cch_bme
+	if stat {bme_stat@=15: return}
+	devcontrol "i2creadw", i2cch_bme
 	static_cal_dig_H2 = get_signed16(stat)
 
 	; dig_H3
-	devcontrol "i2cwrite", 0xE3, 1, i2cch
-	if stat: return 16
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cwrite", 0xE3, 1, i2cch_bme
+	if stat {bme_stat@=16: return}
+	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H3 = stat
 
-	devcontrol "i2cwrite", 0xE5, 1, i2cch
-	if stat: return 17
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cwrite", 0xE5, 1, i2cch_bme
+	if stat {bme_stat@=17: return}
+	devcontrol "i2cread", i2cch_bme
 	h4h5lower = stat
 
 	h4lower = (0x0F & h4h5lower)
 	h5lower = (0xF0 & h4h5lower) >> 4
 
 	; dig_H4
-	devcontrol "i2cwrite", 0xE4, 1, i2cch
-	if stat : return 18
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cwrite", 0xE4, 1, i2cch_bme
+	if stat  {bme_stat@=18: return}
+	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H4 = get_signed12((stat << 4) | h4lower)
 
 	; dig_H5
-	devcontrol "i2cwrite", 0xE6, 1, i2cch
-	if stat : return 19
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cwrite", 0xE6, 1, i2cch_bme
+	if stat  {bme_stat@=19: return}
+	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H5 = get_signed12((stat << 4) | h5lower)
 
 	; dig_H6
-	devcontrol "i2cwrite", 0xE7, 1, i2cch
-	if stat : return 20
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cwrite", 0xE7, 1, i2cch_bme
+	if stat  {bme_stat@=20: return}
+	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H6 = get_signed8(stat)
 
-	return 0
+	bme_stat@=0
+  return
+
 
 #defcfunc get_signed16 int uint
 	res = uint
@@ -263,11 +266,12 @@
 	THP(2) = adc_P
 	return 0
 
-#defcfunc get_temp int i2cch
+#deffunc get_temp
+  i2cch_temp = 0
 	static_t_fine = 0
 
 	dim data, 3
-	status = force_bme(i2cch, data)
+	status = force_bme(i2cch_temp, data)
 	; TODO: error handling using `status`
 	adc_T = data(0)
 
@@ -275,11 +279,13 @@
 	var2  = (((((adc_T>>4) - (static_cal_dig_T1)) * ((adc_T>>4) - (static_cal_dig_T1))) >> 12) * (static_cal_dig_T3)) >> 14
 	static_t_fine = var1 + var2
 	temp = double((static_t_fine * 5 + 128) >> 8)/100.0
-	return temp
+  rpz_temp@=temp
+	return
 
-#defcfunc get_humidity int i2cch
+#deffunc get_humidity
+  i2cch_hum = 0
 	dim data, 3
-	status = force_bme(i2cch, data)
+	status = force_bme(i2cch_hum, data)
 	; TODO: error handling using `status`
 	adc_H = data(1)
 	v_x1_u32r = (staic_t_fine - 76800)
@@ -288,12 +294,14 @@
 	if v_x1_u32r < 0: v_x1_u32r = 0
 	if v_x1_u32r > 419430400: v_x1_u32r = 419430400
 	res = double(v_x1_u32r>>12)/1024.0
-	return res
+  rpz_hum@=res
+	return
 
-#defcfunc get_pressure int i2cch
+#deffunc get_pressure
+  i2cch_press = 0
 	; need 64bit integer
 	dim data, 3
-	status = force_bme(i2cch, data)
+	status = force_bme(i2cch_press, data)
 	; TODO: error handling using `status`
 	adc_P = data(2)
 
@@ -315,7 +323,8 @@
 	var1 = ((static_cal_dig_P9) * ((((p>>3) * (p>>3))>>13)))>>12
 	var2 = (((p>>2)) * (static_cal_dig_P8))>>13
 	res = (p + ((var1 + var2 + static_cal_dig_P7) >> 4))
-	return double(res) / 100.0
+  rpz_press@=double(res)/100.0
+	return
 
 #deffunc geti2c_lux_init
 
@@ -339,7 +348,7 @@
   ; geti2c_lux
   ; ルクス単位に近い値を返します
   ;
-  rpz_lux@=0+get_lux(1)
+  rpz_lux@=get_lux(1)
   return
 
 #deffunc init_lux int _ch

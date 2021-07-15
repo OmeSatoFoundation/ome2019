@@ -1,12 +1,10 @@
 #include "hsp3dish.as"
 #include "rpz-gpio.as"
 
-i2c_ch_bme = 0
-
-fail = init_bme(i2c_ch_bme)		; 温湿度気圧センサ bm280 を初期化する
-if fail {				; 初期化成功チェック
+init_bme		; 温湿度気圧センサ bm280 を初期化する
+if bme_stat {				; 初期化成功チェック
   redraw  0
-  mes "failed to init bme: " + fail
+  mes "failed to init bme: " + bme_stat
   redraw 1
   stop
 }
@@ -16,12 +14,15 @@ geti2c_lux_init			; 照度センサ tsl2572を初期化する
 *main
 	redraw 0
 	pos 60, 60
-  geti2c_lux_als  ; 照度取得
-	
-	temp = get_temp(i2c_ch_bme)		; 温度取得
-	hum  = get_humidity(i2c_ch_bme)		; 湿度取得
-	press= get_pressure(i2c_ch_bme)		; 気圧取得
-	lux  = rpz_lux
+  get_temp  ; rpz_tempに温度取得
+  temp = rpz_temp
+  get_humidity		; rpz_humに湿度取得
+  hum = rpz_hum
+  get_pressure		; rpz_pressに気圧取得
+  press = rpz_press
+  geti2c_lux_als  ; rpz_luxに照度取得
+	lux = rpz_lux
+
 
 	; 取得したデータの表示
 	mes "温度: " + temp + " [℃]"
