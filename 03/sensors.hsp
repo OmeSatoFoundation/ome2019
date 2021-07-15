@@ -16,12 +16,12 @@ geti2c_lux_init			; 照度センサ tsl2572を初期化する
 *main
 	redraw 0
 	pos 60, 60
-  geti2c_lux_als
+  geti2c_lux_als  ; 照度取得
 	
 	temp = get_temp(i2c_ch_bme)		; 温度取得
 	hum  = get_humidity(i2c_ch_bme)		; 湿度取得
 	press= get_pressure(i2c_ch_bme)		; 気圧取得
-	lux  = rpz_lux		; 照度取得
+	lux  = rpz_lux
 
 	; 取得したデータの表示
 	mes "温度: " + temp + " [℃]"
