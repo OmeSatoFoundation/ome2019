@@ -334,6 +334,14 @@
 	rpz_lux@=0+get_lux_fixed(1)			; 16bit整数でセンサー値を取得
 	return
 
+#deffunc geti2c_lux_als
+
+  ; geti2c_lux
+  ; ルクス単位に近い値を返します
+  ;
+  rpz_lux@=0+get_lux(1)
+  return
+
 #deffunc init_lux int _ch
 	devcontrol "i2copen",0x39,_ch	; TSL2572を初期化
 	if stat : return 1
