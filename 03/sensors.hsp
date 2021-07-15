@@ -3,10 +3,10 @@
 
 i2c_ch_bme = 0
 
-fail = init_bme(i2c_ch_bme)		; 温湿度気圧センサ bm280 を初期化する
-if fail {				; 初期化成功チェック
+init_bme		; 温湿度気圧センサ bm280 を初期化する
+if stat {				; 初期化成功チェック
   redraw  0
-  mes "failed to init bme: " + fail
+  mes "failed to init bme: " + stat
   redraw 1
   stop
 }
