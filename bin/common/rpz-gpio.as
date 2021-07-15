@@ -69,13 +69,28 @@
 	static_cal_dig_H5 = 0
 	static_cal_dig_H6 = 0
 	; TODO: slave address (0x77) should be variable.
-	devcontrol "i2copen", 0x77, i2cch
-	if stat : return 1
+	; 0x76: external BME280
+	; 0x77: onboard BME280
+	devcontrol "i2copen", 0x76, i2cch
+	if stat {
+		devcontrol "i2copen", 0x77, i2cch
+		if stat: return 1
+		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。"
+		notesel buf
+		notesave "/dev/stdout"
+	}
 
 	; *** get calibration data ***
 	; dig_T1
 	devcontrol "i2cwrite", 0x88, 1, i2cch
-	if stat: return 2
+	if stat {
+		devcontrol "i2copen", 0x77, i2cch
+		if stat: return 2
+		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。\n"
+		notesel buf
+		notesave "/dev/stdout"
+		devcontrol "i2cwrite", 0x88, 1, i2cch
+	}
 	devcontrol "i2creadw", i2cch
 	static_cal_dig_T1 = stat
 
@@ -308,15 +323,7 @@
 	;	rpz-sensorボードの照度センサーTSL2561を初期化します
 	;	(最初の1回だけ実行してください、以降はgeti2c_luxで更新できます)
 	;
-	;devcontrol "i2copen",0x39	; TSL2561を初期化
-	;if stat : return 1
-	;devcontrol "i2cwrite",0x0180,2	; 電源OFF
-	;if stat : return 1
-	;wait 40
-	;devcontrol "i2cwrite",0x0380,2	; 電源ON
-	;if stat : return 1
-	;wait 40
-	init_lux(1)
+  init_lux(1)
 	return 0
 
 #deffunc geti2c_lux
@@ -324,9 +331,7 @@
 	;	geti2c_lux
 	;	(照度) rpz_luxを高速に取得
 	;
-	;devcontrol "i2cwrite",0x14+0x80,1
-	;devcontrol "i2creadw"
-	rpz_lux@=0+get_lux_fixed(1) 			; 16bit整数でセンサー値を取得
+	rpz_lux@=0+get_lux_fixed(1)			; 16bit整数でセンサー値を取得
 	return
 
 #deffunc init_lux int _ch
