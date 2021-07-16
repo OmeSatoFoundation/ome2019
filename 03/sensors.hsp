@@ -30,5 +30,5 @@ geti2c_lux_init			; 照度センサ tsl2572を初期化する
 	mes "照度: " + lux  + " [lx]"
 
 	redraw 1
-	wait 100
+	wait 1000
 	goto *main
