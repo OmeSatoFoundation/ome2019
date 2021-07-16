@@ -49,7 +49,8 @@
 	rpz_lux@=0.0+res
 	return 0
 
-#defcfunc init_bme int i2cch
+#deffunc init_bme
+  bme_i2cch = 0
 	static_cal_dig_T1 = 0
 	static_cal_dig_T2 = 0
 	static_cal_dig_T3 = 0
@@ -71,9 +72,9 @@
 	; TODO: slave address (0x77) should be variable.
 	; 0x76: external BME280
 	; 0x77: onboard BME280
-	devcontrol "i2copen", 0x76, i2cch
+	devcontrol "i2copen", 0x76, bme_i2cch
 	if stat {
-		devcontrol "i2copen", 0x77, i2cch
+		devcontrol "i2copen", 0x77, bme_i2cch
 		if stat: return 1
 		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。"
 		notesel buf
@@ -82,126 +83,126 @@
 
 	; *** get calibration data ***
 	; dig_T1
-	devcontrol "i2cwrite", 0x88, 1, i2cch
+	devcontrol "i2cwrite", 0x88, 1, bme_i2cch
 	if stat {
-		devcontrol "i2copen", 0x77, i2cch
+		devcontrol "i2copen", 0x77, bme_i2cch
 		if stat: return 2
 		buf = "外付けBME280の初期化に失敗したため、基板上のBME280を使用しています。\n"
 		notesel buf
 		notesave "/dev/stdout"
-		devcontrol "i2cwrite", 0x88, 1, i2cch
+		devcontrol "i2cwrite", 0x88, 1, bme_i2cch
 	}
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_T1 = stat
 
 	; dig_T2
-	devcontrol "i2cwrite", 0x8A, 1, i2cch
+	devcontrol "i2cwrite", 0x8A, 1, bme_i2cch
 	if stat: return 3
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_T2 = get_signed16(stat)
 
 	; dig_T3
-	devcontrol "i2cwrite", 0x8C, 1, i2cch
+	devcontrol "i2cwrite", 0x8C, 1, bme_i2cch
 	if stat: return 4
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_T3 = get_signed16(stat)
 
 	; dig_P1
-	devcontrol "i2cwrite", 0x8E, 1, i2cch
+	devcontrol "i2cwrite", 0x8E, 1, bme_i2cch
 	if stat: return 5
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P1 = stat
 
 	; dig_P2
-	devcontrol "i2cwrite", 0x90, 1, i2cch
+	devcontrol "i2cwrite", 0x90, 1, bme_i2cch
 	if stat: return 6
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P2 = get_signed16(stat)
 
 	; dig_P3
-	devcontrol "i2cwrite", 0x92, 1, i2cch
+	devcontrol "i2cwrite", 0x92, 1, bme_i2cch
 	if stat: return 7
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P3 = get_signed16(stat)
 
 	; dig_P4
-	devcontrol "i2cwrite", 0x94, 1, i2cch
+	devcontrol "i2cwrite", 0x94, 1, bme_i2cch
 	if stat: return 8
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P4 = get_signed16(stat)
 
 	; dig_P5
-	devcontrol "i2cwrite", 0x96, 1, i2cch
+	devcontrol "i2cwrite", 0x96, 1, bme_i2cch
 	if stat: return 9
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P5 = get_signed16(stat)
 
 	; dig_P6
-	devcontrol "i2cwrite", 0x98, 1, i2cch
+	devcontrol "i2cwrite", 0x98, 1, bme_i2cch
 	if stat: return 10
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P6 = get_signed16(stat)
 
 	; dig_P7
-	devcontrol "i2cwrite", 0x9A, 1, i2cch
+	devcontrol "i2cwrite", 0x9A, 1, bme_i2cch
 	if stat: return 11
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P7 = get_signed16(stat)
 
 	; dig_P8
-	devcontrol "i2cwrite", 0x9C, 1, i2cch
+	devcontrol "i2cwrite", 0x9C, 1, bme_i2cch
 	if stat: return 12
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P8 = get_signed16(stat)
 
 	; dig_P9
-	devcontrol "i2cwrite", 0x9E, 1, i2cch
+	devcontrol "i2cwrite", 0x9E, 1, bme_i2cch
 	if stat: return 13
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_P9 = get_signed16(stat)
 
 	; dig_H1
-	devcontrol "i2cwrite", 0xA1, 1, i2cch
+	devcontrol "i2cwrite", 0xA1, 1, bme_i2cch
 	if stat: return 14
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cread", bme_i2cch
 	static_cal_dig_H1 = stat
 
 	; dig_H2
-	devcontrol "i2cwrite", 0xE1, 1, i2cch
+	devcontrol "i2cwrite", 0xE1, 1, bme_i2cch
 	if stat: return 15
-	devcontrol "i2creadw", i2cch
+	devcontrol "i2creadw", bme_i2cch
 	static_cal_dig_H2 = get_signed16(stat)
 
 	; dig_H3
-	devcontrol "i2cwrite", 0xE3, 1, i2cch
+	devcontrol "i2cwrite", 0xE3, 1, bme_i2cch
 	if stat: return 16
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cread", bme_i2cch
 	static_cal_dig_H3 = stat
 
-	devcontrol "i2cwrite", 0xE5, 1, i2cch
+	devcontrol "i2cwrite", 0xE5, 1, bme_i2cch
 	if stat: return 17
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cread", bme_i2cch
 	h4h5lower = stat
 
 	h4lower = (0x0F & h4h5lower)
 	h5lower = (0xF0 & h4h5lower) >> 4
 
 	; dig_H4
-	devcontrol "i2cwrite", 0xE4, 1, i2cch
+	devcontrol "i2cwrite", 0xE4, 1, bme_i2cch
 	if stat : return 18
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cread", bme_i2cch
 	static_cal_dig_H4 = get_signed12((stat << 4) | h4lower)
 
 	; dig_H5
-	devcontrol "i2cwrite", 0xE6, 1, i2cch
+	devcontrol "i2cwrite", 0xE6, 1, bme_i2cch
 	if stat : return 19
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cread", bme_i2cch
 	static_cal_dig_H5 = get_signed12((stat << 4) | h5lower)
 
 	; dig_H6
-	devcontrol "i2cwrite", 0xE7, 1, i2cch
+	devcontrol "i2cwrite", 0xE7, 1, bme_i2cch
 	if stat : return 20
-	devcontrol "i2cread", i2cch
+	devcontrol "i2cread", bme_i2cch
 	static_cal_dig_H6 = get_signed8(stat)
 
 	return 0
