@@ -43,5 +43,5 @@
 	}
 	mae_btn = ima_btn
 
-	await 100
+	await 10
 	goto *hata
