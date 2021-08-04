@@ -7,7 +7,7 @@
 
 *led
 	gpio 22,0
-	wait 50
+	wait 500
 	gpio 22, 1
-	wait 50
+	wait 500
 	goto *led
