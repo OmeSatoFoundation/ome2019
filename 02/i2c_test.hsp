@@ -1,6 +1,7 @@
 
 ;	RPZ-Sensor test
 
+#include "hsp3dish.as"
 #include "rpz-gpio.as"
 
 *main1
