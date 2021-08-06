@@ -1,7 +1,6 @@
 #include "hsp3dish.as"
 #include "rpz-gpio.as"
 
-i2c_ch_bme = 0
 
 init_bme		; 温湿度気圧センサ bm280 を初期化する
 if stat {				; 初期化成功チェック

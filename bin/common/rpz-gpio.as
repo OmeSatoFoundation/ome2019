@@ -205,8 +205,7 @@
 	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H6 = get_signed8(stat)
 
-	bme_stat@=0
-  return
+  if stat : return 0
 
 
 #defcfunc get_signed16 int uint
