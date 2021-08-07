@@ -49,7 +49,7 @@
 	rpz_lux@=0.0+res
 	return 0
 
-#deffunc init_bme 
+#deffunc init_bme
   i2cch_bme = 0
 	static_cal_dig_T1 = 0
 	static_cal_dig_T2 = 0
@@ -72,7 +72,7 @@
 	; TODO: slave address (0x77) should be variable.
 	; 0x76: external BME280
 	; 0x77: onboard BME280
-	devcontrol "i2copen", 0x76, bme_i2cch
+	devcontrol "i2copen", 0x76, i2cch_bme
 	if stat {
 		devcontrol "i2copen", 0x77, i2cch_bme
 		if stat: return 1
@@ -205,7 +205,6 @@
 	devcontrol "i2cread", i2cch_bme
 	static_cal_dig_H6 = get_signed8(stat)
 
-  
   if stat : return 0
 
 
