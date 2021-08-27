@@ -4,18 +4,29 @@ from __future__ import print_function
 from bs4 import BeautifulSoup
 import urllib2
 import sys
-    
+import urllib
+import ast
+def search_meaning(keido,ido):
+	keido= keido.decode('utf-8')
+	ido=ido.decode('utf-8')
+	keido=urllib.quote(keido.encode('utf-8'))
+	ido=urllib.quote(ido.encode('utf-8'))
+	url = 'http://express.heartrails.com/api/json?method=getStations&x='+keido+'&y='+ido
+	html = urllib2.urlopen(url).read()
+	html=html.decode('utf-8')
+	html=ast.literal_eval(html)
+	
+	for i in html['response']['station']:
+		print(i['name'])
+	
+	return 0
+
 def main():
-    argc = len(sys.argv)
-    argv = sys.argv
-    if argc != 2:
-        sys.exit(1)
-    url = "http://www.ekidata.jp/api/l/"+ sys.argv[1].encode('utf-8') + ".xml"
-    html = urllib2.urlopen(url).read()
-    soup = BeautifulSoup(html, 'html.parser')
-    stations = soup.find_all('station_name')
-    for station in stations:
-        print(station.get_text().encode('utf-8'), end=',')
+	argc = len(sys.argv)
+	argv = sys.argv
+	search_meaning(argv[1],argv[2])
+	return 0
+    
 if __name__ == '__main__':
-    main()
+	main()
 
