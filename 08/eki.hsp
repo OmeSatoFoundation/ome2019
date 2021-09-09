@@ -9,7 +9,7 @@ sdim station, 29, 29
 ;検索する緯度経度
 ido = "35.78767"
 keido = "139.27542"
-cmd = "rosen_api.py " + keido +" "+ ido
+cmd = "eki.py " + keido +" "+ ido
 ; 検索した緯度経度の情報から1つ分取得して、result変数へいれる
 ; result変数に駅名をいれる
 cmdexec cmd, result
