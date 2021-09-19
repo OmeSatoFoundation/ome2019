@@ -1,8 +1,7 @@
 #include "hsp3dish.as"
 #include "rpz-gpio.as"
 
-celload("alice.png"),2
-celload("neko.png"),3
+celload("hyou.png"),2
 p = 50
 
 spiopen 0
