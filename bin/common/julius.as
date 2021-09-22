@@ -4,7 +4,7 @@
       exec "killall -s9 julius"
       exec "julius_daemon.sh \"" + dicpath + "\" "
       sdim buf, 4096
-      wait 10000
+      wait 1000
       return
 
     #defcfunc is_recieved int _socidx
