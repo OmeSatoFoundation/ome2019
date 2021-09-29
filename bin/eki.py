@@ -1,5 +1,8 @@
 #!/usr/bin/env python2
 #encoding:utf-8
+#使用したAPIはHeart Rails Expressです
+#https://express.heartrails.com/api.html
+
 from __future__ import print_function
 from bs4 import BeautifulSoup
 import urllib2
