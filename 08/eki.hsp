@@ -23,7 +23,7 @@ splitnl result ,station
 ;　見つかった駅の数
 station_count = stat - 1
 repeat station_count
-    ;カンマ（、）で文字列を分解してそれぞれ配列変数へ入れる
+    ;カンマ（,）で文字列を分解してそれぞれ配列変数へ入れる
     split station(cnt),",",name(cnt),lines(cnt)
     mes name(cnt)+" "+lines(cnt) 
 loop
