@@ -27,5 +27,6 @@ repeat station_count
     split station(cnt),",",name(cnt),lines(cnt)
     mes name(cnt)+" "+lines(cnt) 
 loop
+
 mes "情報: Heart Rails Inc."
-end
+end 
