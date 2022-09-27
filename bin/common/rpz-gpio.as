@@ -1,7 +1,7 @@
 ;	RPZ-Sensor Raspberry Pi module
 #ifndef __rpz-gpio__
 #define __rpz-gpio__
-
+#include"cmdexec.as"
 	;	RPZ-Sensor用の拡張コマンドを定義するファイルです
 	;	#include "rpz-gpio.as"
 	;	を先頭に入れて使用してください
@@ -483,6 +483,18 @@
 #defcfunc rasp_map int _x, int _in_min, int _in_max, int _out_min, int _out_max
 	_value=(_x - _in_min)*(_out_max - _out_min) / (_in_max - _in_min) + _out_min
 	return _value
+
+#deffunc cgpio int _p1, int _p2
+	if _p2 {
+		exec "raspi-gpio set "+ _p1 +" op pn dh"
+	}else{
+		exec "raspi-gpio set "+ _p1 +" op pn dl"
+	}
+    return 
+
+#defcfunc cgpioin int _p1
+    cmdexec "raspi-gpio get "+ _p1 +" | awk -v RS=\" \" -F \"=\" -v k=\"level\" '$1==k {print $2}'",s
+    return int(s)
 
 #global
 
