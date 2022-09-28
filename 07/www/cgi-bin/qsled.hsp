@@ -1,5 +1,5 @@
 #include "hsp3cl.as"
-#include "rpz-gpio-cl.as"
+#include "rpz-gpio.as"
 #include "cgi.as"
 mes "Content-type: text/html\n"
 mes "<html><head><meta charset=\"utf-8\"></head><body>"
@@ -22,6 +22,6 @@ if(led_val = 1) {
 ; クエリストリングのledで指定されたGPIOにvalで指定された値を書き込む
 ; localhost:3000/cgi-bin/qsled.hsp?led=17&val=1
 ; の場合、LED17を点灯させる
-cgpio led_port, led_val
+cgpio led_port, 1
 mes "</body></html>"
 end
