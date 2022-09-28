@@ -1,30 +1,29 @@
-#include "rpz-gpio-cl.as"
+#include "rpz-gpio.as"
 #include "hsp3cl.as"
 
 mes "Content-type: text/html\n"
 mes "<html><head><meta charset=\"utf-8\"></head><body>"
-
-i2c_ch_bme = 0
-i2c_ch_tsl = 1
-
-fail = init_bme(i2c_ch_bme)		; 温湿度気圧センサ bm280 を初期化する
-if fail {				; 初期化成功チェック
-  mes "failed to init bme: " + fail
-  end
+init_bme		; 温湿度気圧センサ bm280 を初期化する
+if stat {				; 初期化成功チェック
+  redraw  0
+  mes "failed to init bme: " + stat
+  redraw 1
+  stop
 }
 
-init_lux i2c_ch_tsl			; 照度センサ tsl2572を初期化する
+geti2c_lux_init			; 照度センサ tsl2572を初期化する
 
 *main
-	
-	temp = get_temp(i2c_ch_bme)		; 温度取得
-	hum  = get_humidity(i2c_ch_bme)		; 湿度取得
-	press= get_pressure(i2c_ch_bme)		; 気圧取得
-	lux  = get_lux(i2c_ch_tsl)		; 照度取得
+  get_temp  ; rpz_tempに温度取得
+  temp = rpz_temp
+  get_humidity		; rpz_humに湿度取得
+  hum = rpz_hum
+  get_pressure		; rpz_pressに気圧取得
+  press = rpz_press
+  geti2c_lux_als  ; rpz_luxに照度取得
+  lux = rpz_lux
 
-
-	; 取得したデータの表示
-	mes "<p>温度 : " + temp + " [℃]</p>"
-
-    mes "</body></html>"
-    end
+  ; 取得したデータの表示
+  mes "<p>温度 : " + temp + " [℃]</p>"
+  mes "</body></html>"
+end
