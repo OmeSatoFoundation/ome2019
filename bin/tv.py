@@ -1,21 +1,19 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 #encoding:utf-8
 from __future__ import print_function
 from bs4 import BeautifulSoup
-import urllib2
 import sys
 import urllib
-
+import urllib.request
+import urllib.parse
 def getprogram(word):
-	word= word.decode('utf-8')
-	word=urllib.quote(word.encode('utf-8'))
+	word =urllib.parse.quote(word)
 	url = 'https://www.tvkingdom.jp/schedulesBySearch.action?stationPlatformId=0&condition.keyword='+word+'&submit=%E6%A4%9C%E7%B4%A2'
-	html = urllib2.urlopen(url).read()
+	html = urllib.request.urlopen(url)
 	soup = BeautifulSoup(html, 'html.parser')
-# 	print(soup)
 	table = soup.findAll('div', class_='utileList')
 	for i in range (0,len(table)):
-		table[i]=table[i].get_text().encode('utf-8')
+		table[i]=table[i].get_text()
 		table[i]=table[i].replace('\r\n',',')
 		table[i]=table[i].replace('\n','')
 		table[i]=table[i].replace(' ','')
@@ -30,7 +28,5 @@ def main():
 	getprogram(argv[1])
 	return 0
 
-
 if __name__ == '__main__':
-    main()
-
+	main()

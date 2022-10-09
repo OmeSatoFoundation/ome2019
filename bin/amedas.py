@@ -1,8 +1,8 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 #encoding:utf-8
 from __future__ import print_function
 import sys
-import urllib2
+import urllib.request
 import getopt
 from bs4 import BeautifulSoup
 
@@ -30,12 +30,13 @@ print_with_headers = False
 def main():
     #アメダスのウェブページのURL
     url = 'http://tenki.jp/amedas/3/16/44056.html'
-
+    with urllib.request.urlopen(url) as response:
+        html=response.read()
     parse_opts()
-    html = urllib2.urlopen(url).read()
     soup = BeautifulSoup(html, 'html.parser')
+    #print(soup);
     # 最初の<table class="common-list-entries amedas-table-entries"> ... </table>を探す
-    table = soup.find_all('table', attrs={'class' : 'common-list-entries amedas-table-entries'})[0] 
+    table = soup.find_all('table' ,attrs={'class' : 'common-list-entries amedas-table-entries'})[0] 
     # <table class="common-list-entries amedas-table-entries"></table>の中の<tr></tr>を2行分取り出す
     tr = [i for i in table.find_all('tr')[:2]] # ヘッダー、値の２行
     result = []
@@ -49,8 +50,8 @@ def main():
     if print_with_headers:
         print('青梅市のアメダスの記録(10分観測値)')
         for h, d in zip(headers, data):
-            print(h.encode('utf-8'), end=' : ')
-            print(d.encode('utf-8'))
+            print(h,end=' : ')
+            print(d,end=':')
     else:
         i = 0
         for d in data:
@@ -58,7 +59,7 @@ def main():
                #d = d.split(' ')[1] #extract time (format for this feild is 'date time')
                pass
             i += 1
-            print(d.encode('utf-8'), end=',')
+            print(d, end=',')
     return 0
 if __name__ == '__main__':
     sys.exit(main())
